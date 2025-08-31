@@ -68,6 +68,40 @@ app.use('/admin',changeadminpassword)
 
 
 
+// Global error handling middleware (add this AFTER all routes)
+app.use((err, req, res, next) => {
+    console.error('Unhandled Error:', err);
+    
+    // Check if response was already sent
+    if (res.headersSent) {
+        return next(err);
+    }
+    
+    // If it's an admin route, try to render admin error page
+    if (req.originalUrl.startsWith('/admin')) {
+        return res.status(500).render('addvehicles', {
+            admin: null,
+            msg: 'Server Error: ' + (err.message || 'Something went wrong')
+        });
+    }
+    
+    // Default error response
+    res.status(500).json({
+        error: 'Internal Server Error',
+        message: err.message || 'Something went wrong'
+    });
+});
+
+// 404 handler
+app.use((req, res) => {
+    res.status(404).json({
+        error: 'Not Found',
+        message: `Cannot ${req.method} ${req.originalUrl}`
+    });
+});
+
+
+
 
 
 app.listen(process.env.PORT, () => {

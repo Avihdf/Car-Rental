@@ -1,8 +1,10 @@
 const jwt = require('jsonwebtoken');
-const JWT_SECRET = 'your_jwt_secret_key';
+
 
 module.exports = (req, res, next) => {
     const token = req.cookies.admin;
+
+    // console.log('Admin Token Check:', token ? 'Present' : 'Missing');
   
 
     if (!token) {
@@ -10,16 +12,20 @@ module.exports = (req, res, next) => {
     }
 
     try {
-        const decoded = jwt.verify(token, JWT_SECRET);
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
         if (decoded.role !== 'admin') {
             return res.redirect('/');
         }
 
         req.adminId = decoded.id;
+
+        // console.log('Admin ID set in middleware:', req.adminId);
         next();
     } catch (err) {
-        res.clearCookie('admin');
+        console.error('Admin Middleware Error:', error);
         return res.redirect('/login');
     }
 };
+
+

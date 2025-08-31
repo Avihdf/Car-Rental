@@ -4,16 +4,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= car.brand %> <%= car.name %> - Driven Car Rental</title>
+    <title>
+        <%= car.brand %>
+            <%= car.name %> - Driven Car Rental
+    </title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Bruno+Ace+SC&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Iceland&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Nova+Mono&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Michroma&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Jura:wght@300..700&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Aldrich&family=Jura:wght@300..700&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Jura:wght@300..700&family=Quicksand:wght@300..700&display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Aldrich&family=Jura:wght@300..700&family=Quicksand:wght@300..700&display=swap"
+        rel="stylesheet">
+
     <style>
         * {
             margin: 0;
@@ -28,7 +34,7 @@
         body {
             font-family: 'Quicksand', sans-serif;
             line-height: 1.6;
-              background: linear-gradient(135deg, #bdc7dd 0%, #bba1a1 100%);
+            background: linear-gradient(135deg, #bdc7dd 0%, #bba1a1 100%);
             min-height: 100vh;
         }
 
@@ -110,7 +116,35 @@
             transition: transform 0.3s ease;
         }
 
-        
+        /* Image Indicators (Bullets) */
+        .image-indicators {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+            gap: 8px;
+        }
+
+        .indicator {
+            width: 10px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid #333;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        .indicator:hover {
+            background: rgba(255, 255, 255, 0.9);
+            transform: scale(1.2);
+        }
+
+        .indicator.active {
+            background: #333;
+        }
+
+
+
 
         /* Car Info Header */
         .car-info-header {
@@ -462,6 +496,7 @@
                 opacity: 0;
                 transform: translateY(20px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -481,155 +516,183 @@
     <div class="page-container">
         <%- include('../partials/clientnavbar') %>
 
-        <div class="vehicle">
-            <!-- Car Details Section -->
-            <div class="car-details fade-in">
-                <a href="/cars" class="back-button">
-                    <i class="fa-solid fa-arrow-left"></i>
-                    Back to all cars
-                </a>
+            <div class="vehicle">
+                <!-- Car Details Section -->
+                <div class="car-details fade-in">
+                    <a href="/cars" class="back-button">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        Back to all cars
+                    </a>
 
-                <!-- Status Badge -->
-                
+                    <!-- Status Badge -->
 
-                <!-- Image Gallery -->
-                <div class="image-gallery">
-                    <% if (car.images && car.images.length > 0) { %>
-                        <img src="<%= v.images[0] %>" alt="<%= car.brand %> <%= car.name %>" class="main-image">
-                    <% } else { %>
-                        <img src="/no-image.png" alt="No Image Available" class="main-image">
-                    <% } %>
-                    <div style="position: absolute;top: 10px;left: 10px;">
-                    <% if (car.available === "Available") { %>
-                        <span class="status-badge status-available">
-                            <i class="fas fa-check-circle"></i>
-                            Available
-                        </span>
-                    <% } else { %>
-                        <span class="status-badge status-unavailable">
-                            <i class="fas fa-times-circle"></i>
-                            Not Available
-                        </span>
-                    <% } %>
-                </div>
-                </div>
 
-                <!-- Car Info Header -->
-                <div class="car-info-header">
-                    <h1 class="car-brand"><%= car.brand %></h1>
-                    <p class="car-model"><%= car.name %> - <%= car.year %></p>
-                </div>
+                    <!-- Image Gallery -->
+                    <div class="image-gallery">
+                        <% if (car.images && car.images.length> 0) { %>
+                            <!-- Main Image -->
+                            <img id="mainImage" src="<%= car.images[0] %>" alt="<%= car.brand %> <%= car.name %>"
+                                class="main-image">
 
-                <!-- Quick Details -->
-                <div class="detail-grid">
-                    <div class="detail-item">
-                        <i class="fa-solid fa-users"></i>
-                        <span><%= car.seating %> Seats</span>
-                    </div>
-                    <div class="detail-item">
-                        <i class="fa-solid fa-gas-pump"></i>
-                        <span><%= car.fuel %></span>
-                    </div>
-                    <div class="detail-item">
-                        <i class="fa-solid fa-location-dot"></i>
-                        <span><%= car.location || "Available" %></span>
-                    </div>
-                    <div class="detail-item">
-                        <i class="fa-solid fa-car-side"></i>
-                        <span><%= car.mode || "Standard" %></span>
-                    </div>
-                </div>
-
-                <!-- Description -->
-                <div class="description-section">
-                    <h2 class="section-title">Description</h2>
-                    <p class="description-text"><%= car.description %></p>
-                </div>
-
-                <!-- Features -->
-                <div class="features-section">
-                    <h2 class="section-title">Features & Amenities</h2>
-                    <div class="features-grid">
-                        <% car.accessories.forEach(feature => { %>
-                            <div class="feature-item">
-                                <i class="fa-solid fa-circle-check"></i>
-                                <span><%= feature.replace(/[{}]/g, '') %></span>
+                            <!-- Bullet Indicators -->
+                            <div class="image-indicators">
+                                <% car.images.forEach((img, index)=> { %>
+                                    <span class="indicator <%= index === 0 ? 'active' : '' %>"
+                                        data-index="<%= index %>"></span>
+                                    <% }) %>
                             </div>
-                        <% }) %>
+                            <% } else { %>
+                                <img src="/no-image.png" alt="No Image Available" class="main-image">
+                                <% } %>
+
+                                    <div style="position: absolute; top: 10px; left: 10px;">
+                                        <% if (car.available==="Available" ) { %>
+                                            <span class="status-badge status-available">
+                                                <i class="fas fa-check-circle"></i>
+                                                Available
+                                            </span>
+                                            <% } else { %>
+                                                <span class="status-badge status-unavailable">
+                                                    <i class="fas fa-times-circle"></i>
+                                                    Not Available
+                                                </span>
+                                                <% } %>
+                                    </div>
                     </div>
+
+
+                    <!-- Car Info Header -->
+                    <div class="car-info-header">
+                        <h1 class="car-brand">
+                            <%= car.brand %>
+                        </h1>
+                        <p class="car-model">
+                            <%= car.name %> - <%= car.year %>
+                        </p>
+                    </div>
+
+                    <!-- Quick Details -->
+                    <div class="detail-grid">
+                        <div class="detail-item">
+                            <i class="fa-solid fa-users"></i>
+                            <span>
+                                <%= car.seating %> Seats
+                            </span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fa-solid fa-gas-pump"></i>
+                            <span>
+                                <%= car.fuel %>
+                            </span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <span>
+                                <%= car.location || "Available" %>
+                            </span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fa-solid fa-car-side"></i>
+                            <span>
+                                <%= car.mode || "Standard" %>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="description-section">
+                        <h2 class="section-title">Description</h2>
+                        <p class="description-text">
+                            <%= car.description %>
+                        </p>
+                    </div>
+
+                    <!-- Features -->
+                    <div class="features-section">
+                        <h2 class="section-title">Features & Amenities</h2>
+                        <div class="features-grid">
+                            <% car.accessories.forEach(feature=> { %>
+                                <div class="feature-item">
+                                    <i class="fa-solid fa-circle-check"></i>
+                                    <span>
+                                        <%= feature.replace(/[{}]/g, '' ) %>
+                                    </span>
+                                </div>
+                                <% }) %>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Booking Card -->
+                <div class="booking fade-in" style="animation-delay: 0.2s;">
+                    <div class="price-section">
+                        <span class="price-main">₹<%= car.price %></span>
+                        <span class="price-period">per day</span>
+                    </div>
+
+                    <form action="/booking" method="post" class="booking-form">
+                        <input type="hidden" name="car_id" value="<%= car._id %>">
+                        <% if (typeof user !=='undefined' && user) { %>
+                            <input type="hidden" name="user_id" value="<%= user._id %>">
+                            <% } %>
+
+                                <div class="form-group">
+                                    <label class="form-label">Pickup Location</label>
+                                    <select name="location" required class="form-input location-dropdown">
+                                        <option value="" disabled selected>-- Select Location --</option>
+                                        <option value="New Delhi">New Delhi</option>
+                                        <option value="Mumbai">Mumbai</option>
+                                        <option value="Chennai">Chennai</option>
+                                        <option value="Goa">Goa</option>
+                                        <option value="Leh & Ladakh">Leh & Ladakh</option>
+                                        <option value="Gurugram">Gurugram</option>
+                                        <option value="Noida">Noida</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="pickup" class="form-label">Pickup Date</label>
+                                    <input type="date" name="pickupdate" id="pickup" class="form-input" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="return" class="form-label">Return Date</label>
+                                    <input type="date" name="returndate" id="return" class="form-input" required>
+                                </div>
+
+                                <% if (car.available==="Unavailable" ) { %>
+                                    <button type="button" class="book-button" disabled>
+                                        <i class="fas fa-times"></i>
+                                        Car Not Available
+                                    </button>
+                                    <% } else { %>
+                                        <button type="submit" class="book-button">
+                                            <i class="fas fa-calendar-check"></i>
+                                            Book Now
+                                        </button>
+                                        <% } %>
+
+                                            <div class="booking-note">
+                                                <i class="fas fa-info-circle"></i>
+                                                No credit card required for reservation
+                                            </div>
+                    </form>
                 </div>
             </div>
 
-            <!-- Booking Card -->
-            <div class="booking fade-in" style="animation-delay: 0.2s;">
-                <div class="price-section">
-                    <span class="price-main">₹<%= car.price %></span>
-                    <span class="price-period">per day</span>
-                </div>
-
-                <form action="/booking" method="post" class="booking-form">
-                    <input type="hidden" name="car_id" value="<%= car._id %>">
-                    <% if (typeof user !== 'undefined' && user) { %>
-                        <input type="hidden" name="user_id" value="<%= user._id %>">
-                    <% } %>
-
-                    <div class="form-group">
-                        <label class="form-label">Pickup Location</label>
-                        <select name="location" required class="form-input location-dropdown">
-                            <option value="" disabled selected>-- Select Location --</option>
-                            <option value="New Delhi">New Delhi</option>
-                            <option value="Mumbai">Mumbai</option>
-                            <option value="Chennai">Chennai</option>
-                            <option value="Goa">Goa</option>
-                            <option value="Leh & Ladakh">Leh & Ladakh</option>
-                            <option value="Gurugram">Gurugram</option>
-                            <option value="Noida">Noida</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="pickup" class="form-label">Pickup Date</label>
-                        <input type="date" name="pickupdate" id="pickup" class="form-input" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="return" class="form-label">Return Date</label>
-                        <input type="date" name="returndate" id="return" class="form-input" required>
-                    </div>
-
-                    <% if (car.available === "Unavailable") { %>
-                        <button type="button" class="book-button" disabled>
-                            <i class="fas fa-times"></i>
-                            Car Not Available
-                        </button>
-                    <% } else { %>
-                        <button type="submit" class="book-button">
-                            <i class="fas fa-calendar-check"></i>
-                            Book Now
-                        </button>
-                    <% } %>
-
-                    <div class="booking-note">
-                        <i class="fas fa-info-circle"></i>
-                        No credit card required for reservation
-                    </div>
-                </form>
-            </div>
-        </div>
-
-        <footer class="footer">
-            <%- include('../partials/footer') %>
-        </footer>
+            <footer class="footer">
+                <%- include('../partials/footer') %>
+            </footer>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Set minimum date to today for pickup
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('pickup').min = today;
-            
+
             // Update return date minimum when pickup date changes
-            document.getElementById('pickup').addEventListener('change', function() {
+            document.getElementById('pickup').addEventListener('change', function () {
                 const pickupDate = new Date(this.value);
                 const nextDay = new Date(pickupDate);
                 nextDay.setDate(pickupDate.getDate() + 1);
@@ -638,16 +701,39 @@
 
             // Form validation
             const form = document.querySelector('.booking-form');
-            form.addEventListener('submit', function(e) {
+            form.addEventListener('submit', function (e) {
                 const pickup = new Date(document.getElementById('pickup').value);
                 const returnDate = new Date(document.getElementById('return').value);
-                
+
                 if (returnDate <= pickup) {
                     e.preventDefault();
                     alert('Return date must be after pickup date');
                     return false;
                 }
             });
+
+            document.addEventListener('DOMContentLoaded', function () {
+                const images = `<%- JSON.stringify(car.images) %>`; // Get images from EJS safely
+                const mainImage = document.getElementById('mainImage');
+                const indicators = document.querySelectorAll('.indicator');
+
+                if (mainImage && indicators.length > 0) {
+                    indicators.forEach(indicator => {
+                        indicator.addEventListener('click', () => {
+                            // Remove active class from all bullets
+                            indicators.forEach(dot => dot.classList.remove('active'));
+
+                            // Add active to clicked bullet
+                            indicator.classList.add('active');
+
+                            // Change main image
+                            const index = parseInt(indicator.getAttribute('data-index'));
+                            mainImage.src = images[index];
+                        });
+                    });
+                }
+            });
+
 
             // Add loading animation
             const elements = document.querySelectorAll('.fade-in');
