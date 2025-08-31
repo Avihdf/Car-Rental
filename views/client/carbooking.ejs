@@ -104,17 +104,43 @@
         /* Image Gallery */
         .image-gallery {
             position: relative;
-            margin-bottom: 30px;
+            width: 100%;
+            max-width: 700px;
+            margin: 0 auto 30px;
         }
 
         .main-image {
-            width: 100%;
-            height: 400px;
+            width: 700px;
+            max-width: 700px;
+            /* Optional: limits max size */
+            height: auto;
+            aspect-ratio: 16 / 9;
+            /* Keeps consistent proportions */
             object-fit: cover;
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease;
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease;
         }
+
+        .main-image:hover {
+            transform: scale(1.02);
+        }
+
+        @media screen and (max-width: 768px) {
+            .main-image {
+                max-width: 100%;
+                height: auto;
+                aspect-ratio: 16 / 9;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .main-image {
+                aspect-ratio: 4 / 3;
+            }
+        }
+
+
 
         /* Image Indicators (Bullets) */
         .image-indicators {
@@ -400,14 +426,27 @@
         }
 
         /* Responsive Design */
-        @media screen and (max-width: 1200px) {
-            .vehicle {
-                grid-template-columns: 1fr 350px;
-                gap: 30px;
-            }
-        }
+        /* Collapse layout below 1200px */
+@media screen and (max-width: 1220px) {
+    .vehicle {
+        grid-template-columns: 1fr; /* Make it single-column */
+        gap: 30px;
+        padding: 15px;
+    }
+
+    .booking {
+        position: static; /* Remove sticky positioning */
+        max-width: 600px;
+        margin: 0 auto;
+    }
+}
+
 
         @media screen and (max-width: 1024px) {
+            .page-container {
+                padding-top: 80px;
+            }
+
             .vehicle {
                 grid-template-columns: 1fr;
                 gap: 30px;
@@ -687,6 +726,12 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            // Parse images array safely from EJS
+            const imagesJson = `<%- JSON.stringify(car.images) %>`;
+            const images = JSON.parse(imagesJson);
+            const mainImage = document.getElementById('mainImage');
+            const indicators = document.querySelectorAll('.indicator');
+
             // Set minimum date to today for pickup
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('pickup').min = today;
@@ -712,28 +757,41 @@
                 }
             });
 
-            document.addEventListener('DOMContentLoaded', function () {
-                const images = `<%- JSON.stringify(car.images) %>`; // Get images from EJS safely
-                const mainImage = document.getElementById('mainImage');
-                const indicators = document.querySelectorAll('.indicator');
+            // Image Gallery Navigation
+            if (mainImage && indicators.length > 0 && images.length > 0) {
+                let currentIndex = 0;
 
-                if (mainImage && indicators.length > 0) {
-                    indicators.forEach(indicator => {
-                        indicator.addEventListener('click', () => {
-                            // Remove active class from all bullets
-                            indicators.forEach(dot => dot.classList.remove('active'));
+                // Function to update image
+                function updateImage(index) {
+                    if (index < 0) index = images.length - 1;
+                    if (index >= images.length) index = 0;
 
-                            // Add active to clicked bullet
-                            indicator.classList.add('active');
+                    currentIndex = index;
+                    mainImage.src = images[currentIndex];
 
-                            // Change main image
-                            const index = parseInt(indicator.getAttribute('data-index'));
-                            mainImage.src = images[index];
-                        });
-                    });
+                    // Update active indicator
+                    indicators.forEach(dot => dot.classList.remove('active'));
+                    if (indicators[currentIndex]) {
+                        indicators[currentIndex].classList.add('active');
+                    }
                 }
-            });
 
+                // Bullet click handlers
+                indicators.forEach((indicator, index) => {
+                    indicator.addEventListener('click', () => {
+                        updateImage(index);
+                    });
+                });
+
+                // Keyboard navigation (optional)
+                document.addEventListener('keydown', (event) => {
+                    if (event.key === 'ArrowLeft') {
+                        updateImage(currentIndex - 1);
+                    } else if (event.key === 'ArrowRight') {
+                        updateImage(currentIndex + 1);
+                    }
+                });
+            }
 
             // Add loading animation
             const elements = document.querySelectorAll('.fade-in');
@@ -742,6 +800,7 @@
             });
         });
     </script>
+
 </body>
 
 </html>

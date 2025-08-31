@@ -221,6 +221,7 @@
                 opacity: 0;
                 transform: translateY(-10px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -256,7 +257,7 @@
             .sidenavbar {
                 width: 260px;
             }
-            
+
             .main-content {
                 margin-left: 260px;
             }
@@ -297,8 +298,13 @@
             }
 
             @keyframes fadeIn {
-                from { opacity: 0; }
-                to { opacity: 1; }
+                from {
+                    opacity: 0;
+                }
+
+                to {
+                    opacity: 1;
+                }
             }
 
             .profile {
@@ -441,18 +447,29 @@
             <a href="/admin/dashboard" class="brand-logo">Driven Admin</a>
         </div>
 
+        <!-- In your navbar partial (partials/navbar.ejs) -->
         <div class="profile">
-            <a href="/admin/profile/<%= admin._id %>" id="profile">
-                <i class="fa-solid fa-circle-user"></i>
-                <span><%= admin.name %></span>
-            </a>
-            <form action="/admin/logout" method="post" style="margin: 0;">
-                <button id="logout" type="submit">
-                    <i class="fa-solid fa-power-off"></i>
-                    <span>Logout</span>
-                </button>
-            </form>
+            <% if (typeof admin !=='undefined' && admin && admin._id) { %>
+                <a href="/admin/profile/<%= admin._id %>" id="profile">
+                    <i class="fa-solid fa-circle-user"></i>
+                    <span>
+                        <%= admin.name %>
+                    </span>
+                </a>
+                <% } else { %>
+                    <a href="/admin/login" id="profile">
+                        <i class="fa-solid fa-circle-user"></i>
+                        <span>Login</span>
+                    </a>
+                    <% } %>
+                        <form action="/admin/logout" method="post" style="margin: 0;">
+                            <button id="logout" type="submit">
+                                <i class="fa-solid fa-power-off"></i>
+                                <span>Logout</span>
+                            </button>
+                        </form>
         </div>
+
     </div>
 
     <!-- SIDE NAVBAR -->
@@ -544,7 +561,7 @@
         function setActiveLink() {
             const currentPath = window.location.pathname;
             const navLinks = document.querySelectorAll('.nav-link');
-            
+
             navLinks.forEach(link => {
                 link.classList.remove('active');
                 if (link.getAttribute('href') === currentPath) {
@@ -554,7 +571,7 @@
         }
 
         // Keyboard navigation
-        document.addEventListener('keydown', function(e) {
+        document.addEventListener('keydown', function (e) {
             if (e.key === 'Escape' && sidebar.classList.contains('active')) {
                 sidebar.classList.remove('active');
                 body.classList.remove('active-overlay');
@@ -562,12 +579,12 @@
         });
 
         // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             setActiveLink();
         });
 
         // Handle window resize
-        window.addEventListener('resize', function() {
+        window.addEventListener('resize', function () {
             if (window.innerWidth > 1024 && sidebar.classList.contains('active')) {
                 sidebar.classList.remove('active');
                 body.classList.remove('active-overlay');
