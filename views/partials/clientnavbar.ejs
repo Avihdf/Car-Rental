@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navbar</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Bruno+Ace+SC&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Iceland&display=swap" rel="stylesheet">
+
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: 'Iceland', sans-serif;
+        }
+
+        /* Navbar container */
+        .navbar {
+            width: 96%;
+            background: rgba(8, 8, 8, 0.25);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 24px;
+            margin: 10px auto;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            flex-wrap: wrap;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        /* Logo */
+        .logo {
+            font-family: "Bruno Ace SC", cursive;
+            font-size: 32px;
+            text-decoration: none;
+            color: black;
+        }
+
+        /* Links */
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            transition: max-height 0.3s ease;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            font-size: 20px;
+            color: black;
+            padding: 6px 12px;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            background: rgba(0, 0, 0, 0.1);
+            box-shadow: 0px 0px 10px black;
+            transform: scale(1.05);
+        }
+
+        /* Auth Section */
+        .auth {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .auth a {
+            font-size: 22px;
+            color: black;
+            text-decoration: none;
+            padding: 4px 10px;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .auth a:hover {
+            background: rgba(0, 0, 0, 0.1);
+            box-shadow: 0px 0px 10px black;
+            transform: scale(1.05);
+        }
+
+        /* Dropdown styles */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropbtn {
+            font-size: 22px;
+            color: black;
+            padding: 4px 10px;
+            border-radius: 30px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-family: 'Iceland', sans-serif;
+        }
+
+        .dropbtn:hover {
+            background: rgba(0, 0, 0, 0.1);
+            box-shadow: 0px 0px 10px black;
+            transform: scale(1.05);
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 45px;
+            right: 0;
+            background-color: #f1f1f1;
+            min-width: 180px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            border-radius: 5px;
+        }
+
+        .dropdown-content a {
+            font-size: 15px;
+            color: black;
+            padding: 10px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content.show {
+            display: block;
+        }
+
+        /* Hamburger Icon */
+        .menu-toggle {
+            display: none;
+            font-size: 28px;
+            cursor: pointer;
+        }
+
+        /* Responsive Styling */
+        @media screen and (max-width: 768px) {
+            .nav-links,
+            .auth {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                margin-top: 10px;
+                text-align: center;
+            }
+
+            .navbar.responsive .nav-links,
+            .navbar.responsive .auth {
+                display: flex;
+            }
+
+            .navbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar" id="navbar">
+        <a href="/" class="logo">Driven</a>
+        <i class="fa-solid fa-bars menu-toggle" onclick="toggleMenu()"></i>
+
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/cars">Cars</a>
+            <a href="/aboutus">About Us</a>
+            <a href="/contact">Contact</a>
+        </div>
+
+        <div class="auth">
+            <% if (typeof user !== 'undefined' && user) { %>
+                <div class="dropdown">
+                    <button class="dropbtn" onclick="toggleDropdown()">
+                        <i class="fa-solid fa-circle-user"></i> <%= user.name %>
+                    </button>
+                    <div class="dropdown-content" id="userDropdown">
+                        <a href="/userprofile/<%=user._id%>"><i class="fa-solid fa-user-pen"></i> Update Profile</a>
+                        <a href="/updatepassword/<%=user._id%>"><i class="fa-solid fa-key"></i> Update Password</a>
+                        <a href="/bookings/<%=user._id%>"><i class="fa-solid fa-clipboard-list"></i> Your Bookings</a>
+                        <a href="/logout"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
+                    </div>
+                </div>
+            <% } else { %>
+                <a href="/login"><i class="fa-solid fa-circle-user"></i> Login</a>
+            <% } %>
+        </div>
+    </div>
+
+    <script>
+        const toggleMenu = () => {
+            const navbar = document.getElementById('navbar');
+            navbar.classList.toggle('responsive');
+        }
+
+        const toggleDropdown = () => {
+            document.getElementById("userDropdown").classList.toggle("show");
+        }
+
+        // Close dropdown if clicked outside
+        window.onclick = function(event) {
+            if (!event.target.matches('.dropbtn')) {
+                const dropdowns = document.getElementsByClassName("dropdown-content");
+                for (let i = 0; i < dropdowns.length; i++) {
+                    dropdowns[i].classList.remove('show');
+                }
+            }
+        }
+    </script>
+</body>
+</html>

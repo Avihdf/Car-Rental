@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Driven - Premium Car Rentals</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Bruno+Ace+SC&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Iceland&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nova+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Michroma&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Jura:wght@300..700&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Aldrich&family=Jura:wght@300..700&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .page-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            width: 95%;
+            max-width: 1200px;
+        }
+
+        .content {
+            flex: 1;
+            padding-top: 0;
+            margin-top: -20px;
+        }
+
+        /* Hero Section */
+        .front {
+            background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('/images/iris.webp') no-repeat center center;
+            background-size: cover;
+            background-attachment: fixed;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            padding: 0 5%;
+            color: white;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            border-radius: 0px 0px 30px 30px;
+            overflow: hidden;
+        }
+
+        .front::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.1));
+            z-index: 1;
+        }
+
+        .frontcontent {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .quote {
+            font-size: clamp(28px, 5vw, 48px);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .subtitle {
+            font-size: clamp(16px, 2.5vw, 20px);
+            margin-bottom: 20px;
+            font-weight: 500;
+            letter-spacing: 2px;
+        }
+
+        .divider {
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #ff6b6b, #feca57);
+            border: none;
+            margin: 20px 0;
+            border-radius: 2px;
+        }
+
+        #btn1 {
+            display: inline-block;
+            border: none;
+            border-radius: 50px;
+            font-size: clamp(18px, 2.5vw, 24px);
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            padding: 15px 40px;
+            font-family: "Quicksand", sans-serif;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-top: 30px;
+        }
+
+        #btn1:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
+            background: linear-gradient(135deg, #5a67d8, #667eea);
+        }
+
+        /* Brand Slider */
+        .slider-container {
+            margin: 40px 0;
+            width: 100%;
+            height: 100px;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .slider {
+            width: fit-content;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            animation: loop 20s linear infinite;
+            height: 100%;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            min-width: auto;
+            height: 60px;
+            gap: 15px;
+            background: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .brand:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .brand img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            border-radius: 50%;
+            background: white;
+            padding: 5px;
+        }
+
+        .brand label {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            font-family: 'Quicksand', sans-serif;
+            white-space: nowrap;
+        }
+
+        @keyframes loop {
+            0% {
+                transform: translateX(100%);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Featured Vehicles Section */
+        .find-car-section {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px 20px;
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+        }
+
+        .find-car-section h2 {
+            font-size: clamp(28px, 4vw, 40px);
+            font-family: 'Jura', sans-serif;
+            text-align: center;
+            color: #2d3748;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: clamp(14px, 2vw, 18px);
+            color: #718096;
+            margin-bottom: 50px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .vehicle {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            justify-content: center;
+            padding: 20px 0;
+        }
+
+        .card {
+            background: rgb(228, 221, 221);
+            width: 420px;
+            height: 450px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .image-container {
+            position: relative;
+            width: 100%;
+            height: 220px;
+            overflow: hidden;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover .image-container img {
+            transform: scale(1.05);
+        }
+
+        .available {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: linear-gradient(135deg, #48bb78, #38a169);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .price {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .card-content {
+            padding: 20px;
+            padding-top: 60px;
+        }
+
+        .card-title {
+            font-family: 'Jura', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 5px;
+        }
+
+        .card-subtitle {
+            color: #718096;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .card-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: #4a5568;
+        }
+
+        .detail-item i {
+            color: #667eea;
+            width: 16px;
+        }
+
+        .explorecar {
+            display: flex;
+            justify-content: center;
+            margin-top: 50px;
+        }
+
+        .explorecar a {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 16px;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .explorecar a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
+            background: linear-gradient(135deg, #5a67d8, #667eea);
+        }
+
+        .review {
+            margin: 60px 0;
+        }
+
+        .footer {
+            margin-top: auto;
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 1024px) {
+            .navbar {
+                width: 98%;
+            }
+
+            .find-car-section {
+                padding: 40px 15px;
+            }
+
+            .vehicle {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 25px;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .front {
+                height: 100vh;
+                background-attachment: scroll;
+                padding: 0 20px;
+                border-radius: 0px 0px 20px 20px;
+            }
+
+            .frontcontent {
+                text-align: center;
+            }
+
+            .slider-container {
+                height: 80px;
+                margin: 30px 0;
+            }
+
+            .brand {
+                height: 50px;
+                padding: 8px 15px;
+                gap: 10px;
+            }
+
+            .brand img {
+                width: 40px;
+                height: 40px;
+            }
+
+            .brand label {
+                font-size: 14px;
+            }
+
+            .find-car-section {
+                padding: 40px 15px;
+            }
+
+            .vehicle {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 20px;
+            }
+
+            .card {
+                border-radius: 15px;
+            }
+
+            .image-container {
+                height: 180px;
+            }
+
+            .explorecar a {
+                padding: 12px 30px;
+                font-size: 14px;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .navbar {
+                top: 5px;
+                width: 95%;
+            }
+
+            .front {
+                padding: 0 15px;
+                border-radius: 0px 0px 15px 15px;
+            }
+
+            .frontcontent {
+                padding: 20px 0;
+            }
+
+            #btn1 {
+                padding: 12px 30px;
+                width: 100%;
+                max-width: 280px;
+            }
+
+            .slider-container {
+                height: 70px;
+            }
+
+            .brand {
+                height: 45px;
+                padding: 6px 12px;
+            }
+
+            .brand img {
+                width: 35px;
+                height: 35px;
+            }
+
+            .brand label {
+                font-size: 12px;
+            }
+
+            .vehicle {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .card {
+                margin: 0 auto;
+                max-width: 350px;
+            }
+
+            .card-content {
+                padding: 15px;
+            }
+
+            .explorecar a {
+                width: 90%;
+                max-width: 280px;
+                justify-content: center;
+            }
+        }
+
+        @media screen and (max-width: 320px) {
+            .find-car-section {
+                padding: 30px 10px;
+            }
+
+            .card {
+                max-width: 300px;
+            }
+        }
+
+        /* Loading animation */
+        .loading {
+            opacity: 0;
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Smooth hover effects */
+        .card a {
+            color: inherit;
+            text-decoration: none;
+            display: block;
+            height: 100%;
+        }
+
+        /* Better focus states */
+        .card:focus-within,
+        #btn1:focus,
+        .explorecar a:focus {
+            outline: 3px solid rgba(102, 126, 234, 0.4);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page-container">
+        <%- include('../partials/clientnavbar') %>
+
+        <div class="content">
+            <!-- Hero Section -->
+            <div class="front">
+                <div class="frontcontent">
+                    <h1 class="quote">Drive your dreams — rent the ride,<br> own the experience.</h1>
+                    <p class="subtitle">FIND THE PERFECT CAR FOR TODAY</p>
+                    <hr class="divider">
+                    <a href="/cars" id="btn1">
+                        <i class="fas fa-search"></i>
+                        Find Your Car Now
+                    </a>
+                </div>
+            </div>
+
+            <!-- Brand Slider -->
+            <div class="slider-container">
+                <div class="slider">
+                    <div class="brand">
+                        <img src="/images/download (1).jpg" alt="Toyota">
+                        <label>Toyota</label>
+                    </div>
+                    <div class="brand">
+                        <img src="/images/download (1).png" alt="Hyundai">
+                        <label>Hyundai</label>
+                    </div>
+                    <div class="brand">
+                        <img src="/images/images.png" alt="Maruti Suzuki">
+                        <label>Maruti Suzuki</label>
+                    </div>
+                    <div class="brand">
+                        <img src="/images/download.png" alt="Mahindra">
+                        <label>Mahindra</label>
+                    </div>
+                    <div class="brand">
+                        <img src="/images/images.jpg" alt="Tata Motors">
+                        <label>Tata Motors</label>
+                    </div>
+                    <div class="brand">
+                        <img src="/images/download (1).jpg" alt="Toyota">
+                        <label>Toyota</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Featured Vehicles Section -->
+            <div class="find-car-section">
+                <h2>Featured Vehicles</h2>
+                <p class="section-subtitle">
+                    Explore our selection of premium vehicles available for your next adventure
+                </p>
+                
+                <div class="vehicle">
+                    <% vehicle.forEach((v, i)=> { %>
+                        <div class="card loading" >
+                            <a href="/car/<%= v._id %>">
+                                <div class="image-container">
+                                    <span class="available">
+                                        <%= v.available %>
+                                    </span>
+                                    <% if (v.images && v.images.length > 0) { %>
+                                        <img src="/uploads/<%= v.images[0] %>" alt="<%= v.brand %> <%= v.name %>">
+                                    <% } else { %>
+                                        <img src="/no-image.png" alt="No Image Available">
+                                    <% } %>
+                                    <span class="price">₹<%= v.price %>/day</span>
+                                </div>
+
+                                <div class="card-content">
+                                    <h3 class="card-title"><%= v.brand %></h3>
+                                    <p class="card-subtitle"><%= v.name %> - <%= v.year %></p>
+
+                                    <div class="card-details">
+                                        <div class="detail-item">
+                                            <i class="fa-solid fa-users"></i>
+                                            <span><%= v.seating %> Seats</span>
+                                        </div>
+                                        <div class="detail-item">
+                                            <i class="fa-solid fa-location-dot"></i>
+                                            <span><%= v.location || "Available" %></span>
+                                        </div>
+                                        <div class="detail-item">
+                                            <i class="fa-solid fa-gas-pump"></i>
+                                            <span><%= v.fuel %></span>
+                                        </div>
+                                        <div class="detail-item">
+                                            <i class="fa-solid fa-car-side"></i>
+                                            <span><%= v.mode || "Standard" %></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    <% }) %>
+                </div>
+                
+                <div class="explorecar">
+                    <a href="/cars">
+                        Explore All Cars 
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Reviews Section -->
+            <div class="review">
+                <%- include('./reviewmainpage') %>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <%- include('../partials/footer') %>
+        </footer>
+    </div>
+
+    <script>
+        // Add loading animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.loading');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                    }
+                });
+            });
+
+            cards.forEach(card => {
+                observer.observe(card);
+            });
+
+            // Smooth scroll for internal links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        });
+
+        // Parallax effect for hero section
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelector('.front');
+            const speed = scrolled * 0.5;
+            if (parallax && window.innerWidth > 768) {
+                parallax.style.backgroundPosition = `center ${speed}px`;
+            }
+        });
+    </script>
+</body>
+
+</html>

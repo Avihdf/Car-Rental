@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Driven - Footer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bruno+Ace+SC&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+        }
+
+        /* Main Footer Container */
+        .footer-bar {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 50px 20px 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer-bar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #3498db, #e74c3c, #f39c12, #2ecc71);
+            background-size: 300% 100%;
+            animation: gradientShift 3s ease-in-out infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            align-items: start;
+        }
+
+        /* Footer Sections */
+        .footer-section {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .footer-section.logo {
+            align-items: center;
+            text-align: center;
+        }
+
+        /* Logo Section */
+        .footer-logo {
+            font-family: "Bruno Ace SC", cursive;
+            font-size: clamp(24px, 4vw, 32px);
+            color: #3498db;
+            text-decoration: none;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .footer-logo:hover {
+            color: #5dade2;
+            transform: scale(1.05);
+        }
+
+        .logo-tagline {
+            font-size: 14px;
+            color: #bdc3c7;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        /* Section Titles */
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #ecf0f1;
+            margin-bottom: 20px;
+            position: relative;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 30px;
+            height: 3px;
+            background: linear-gradient(90deg, #3498db, #e74c3c);
+            border-radius: 2px;
+        }
+
+        /* Links Styling */
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .footer-links a {
+            color: #bdc3c7;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 400;
+            padding: 8px 0;
+            transition: all 0.3s ease;
+            position: relative;
+            border-radius: 6px;
+        }
+
+        .footer-links a:hover {
+            color: #3498db;
+            padding-left: 15px;
+            transform: translateX(5px);
+        }
+
+        .footer-links a::before {
+            content: '▶';
+            position: absolute;
+            left: -20px;
+            opacity: 0;
+            transition: all 0.3s ease;
+            color: #3498db;
+            font-size: 12px;
+        }
+
+        .footer-links a:hover::before {
+            opacity: 1;
+            left: -15px;
+        }
+
+        /* Contact Section */
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            color: #bdc3c7;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover {
+            color: #3498db;
+            transform: translateX(5px);
+        }
+
+        .contact-item i {
+            font-size: 18px;
+            margin-right: 12px;
+            width: 20px;
+            text-align: center;
+            color: #3498db;
+        }
+
+        .contact-item a {
+            color: inherit;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .contact-item a:hover {
+            color: #5dade2;
+        }
+
+        /* Social Media Icons */
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            justify-content: center;
+        }
+
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            background: rgba(52, 152, 219, 0.1);
+            border: 2px solid rgba(52, 152, 219, 0.3);
+            border-radius: 50%;
+            color: #3498db;
+            font-size: 20px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .social-icons a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: all 0.5s ease;
+        }
+
+        .social-icons a:hover {
+            background: #3498db;
+            color: white;
+            transform: translateY(-3px) scale(1.1);
+            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
+        }
+
+        .social-icons a:hover::before {
+            left: 100%;
+        }
+
+        /* Bottom Bar */
+        .footer-bottom {
+            margin-top: 40px;
+            padding-top: 25px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .copyright {
+            color: #95a5a6;
+            font-size: 14px;
+        }
+
+        .footer-nav {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .footer-nav a {
+            color: #95a5a6;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .footer-nav a:hover {
+            color: #3498db;
+        }
+
+        /* Newsletter Section */
+        .newsletter-section {
+            background: rgba(52, 152, 219, 0.1);
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid rgba(52, 152, 219, 0.2);
+            margin-top: 20px;
+        }
+
+        .newsletter-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #ecf0f1;
+            margin-bottom: 10px;
+        }
+
+        .newsletter-desc {
+            font-size: 14px;
+            color: #bdc3c7;
+            margin-bottom: 20px;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 10px;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-input::placeholder {
+            color: rgba(255,255,255,0.6);
+        }
+
+        .newsletter-input:focus {
+            outline: none;
+            background: rgba(255,255,255,0.15);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.5);
+        }
+
+        .newsletter-btn {
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-btn:hover {
+            background: linear-gradient(135deg, #5dade2, #3498db);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 1024px) {
+            .footer-container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 30px;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .footer-bar {
+                padding: 40px 15px 25px;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                text-align: center;
+            }
+
+            .footer-section {
+                align-items: center;
+            }
+
+            .section-title::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+
+            .footer-nav {
+                justify-content: center;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .social-icons {
+                justify-content: center;
+            }
+
+            .footer-nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+
+        /* Scroll to top button */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            z-index: 1000;
+        }
+
+        .scroll-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-top:hover {
+            background: linear-gradient(135deg, #5dade2, #3498db);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
+        }
+    </style>
+</head>
+
+<body>
+    <footer class="footer-bar">
+        <div class="footer-container">
+            <!-- Logo Section -->
+            <div class="footer-section logo">
+                <a href="/" class="footer-logo">Driven</a>
+                <p class="logo-tagline">Your Journey, Our Passion</p>
+                
+                <!-- <div class="newsletter-section">
+                    <h4 class="newsletter-title">Stay Updated</h4>
+                    <p class="newsletter-desc">Get the latest car deals and updates</p>
+                    <div class="newsletter-form">
+                        <input type="email" class="newsletter-input" placeholder="Enter your email">
+                        <button class="newsletter-btn">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div> -->
+            </div>
+
+            <!-- Quick Links -->
+            <div class="footer-section">
+                <h3 class="section-title">Quick Links</h3>
+                <div class="footer-links">
+                    <a href="/"><i class="fas fa-home"></i> Home</a>
+                    <a href="/cars"><i class="fas fa-car"></i> Cars</a>
+                    <a href="/aboutus"><i class="fas fa-info-circle"></i> About Us</a>
+                    <a href="/contact"><i class="fas fa-envelope"></i> Contact</a>
+                    <a href="/booking"><i class="fas fa-calendar-check"></i> Book Now</a>
+                </div>
+            </div>
+
+            <!-- Resources -->
+            <div class="footer-section">
+                <h3 class="section-title">Resources</h3>
+                <div class="footer-links">
+                    <a href="/helpcenter"><i class="fas fa-question-circle"></i> Help Center</a>
+                    <a href="/terms"><i class="fas fa-file-contract"></i> Terms of Service</a>
+                    <a href="/privacypolicy"><i class="fas fa-shield-alt"></i> Privacy Policy</a>
+                    <a href="/insurance"><i class="fas fa-umbrella"></i> Insurance</a>
+                    <a href="/faq"><i class="fas fa-comments"></i> FAQ</a>
+                </div>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="footer-section">
+                <h3 class="section-title">Get in Touch</h3>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <a href="mailto:driven@gmail.com">driven@gmail.com</a>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <a href="tel:+919876543210">+91 9625549745</a>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Dwarka Mor, New Delhi, India </span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-clock"></i>
+                        <span>24/7 Customer Support</span>
+                    </div>
+                </div>
+
+                <div class="social-icons">
+                    <a href="https://www.facebook.com/" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.twitter.com/" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.linkedin.com/" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://www.youtube.com/" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="copyright">
+                © 2025 Driven. All rights reserved. | Made with ❤️ for car enthusiasts
+            </div>
+            <nav class="footer-nav">
+                <a href="/sitemap">Sitemap</a>
+                <a href="/accessibility">Accessibility</a>
+                <a href="/cookies">Cookie Policy</a>
+            </nav>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-top" onclick="scrollToTop()" aria-label="Scroll to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // Scroll to top functionality
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Show/hide scroll to top button
+        window.addEventListener('scroll', function() {
+            const scrollTop = document.querySelector('.scroll-top');
+            if (window.pageYOffset > 300) {
+                scrollTop.classList.add('show');
+            } else {
+                scrollTop.classList.remove('show');
+            }
+        });
+
+        // Newsletter form submission
+        document.querySelector('.newsletter-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            const email = document.querySelector('.newsletter-input').value;
+            if (email && email.includes('@')) {
+                // Add your newsletter signup logic here
+                alert('Thank you for subscribing to our newsletter!');
+                document.querySelector('.newsletter-input').value = '';
+            } else {
+                alert('Please enter a valid email address.');
+            }
+        });
+
+        // Add loading animation for links
+        document.querySelectorAll('.footer-links a, .footer-nav a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                // Add loading state if needed
+                const icon = this.querySelector('i');
+                if (icon) {
+                    icon.classList.add('fa-spin');
+                    setTimeout(() => {
+                        icon.classList.remove('fa-spin');
+                    }, 1000);
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

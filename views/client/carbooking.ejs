@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= car.brand %> <%= car.name %> - Driven Car Rental</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bruno+Ace+SC&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Iceland&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nova+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Michroma&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Jura:wght@300..700&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Aldrich&family=Jura:wght@300..700&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            line-height: 1.6;
+              background: linear-gradient(135deg, #bdc7dd 0%, #bba1a1 100%);
+            min-height: 100vh;
+        }
+
+        .page-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding-top: 100px;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            width: 95%;
+            max-width: 1200px;
+        }
+
+        /* Back Button */
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: black;
+            text-decoration: none;
+            font-weight: 600;
+            font-family: 'Jura', sans-serif;
+            font-size: 16px;
+            margin-bottom: 20px;
+            padding: 5px 20px;
+            margin-top: -30px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(-5px);
+        }
+
+        /* Main Content Container */
+        .vehicle {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 10px;
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 40px;
+            align-items: start;
+        }
+
+        /* Car Details Section */
+        .car-details {
+            background: rgba(202, 198, 198, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* Image Gallery */
+        .image-gallery {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .main-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        
+
+        /* Car Info Header */
+        .car-info-header {
+            margin-bottom: 30px;
+        }
+
+        .car-brand {
+            font-size: clamp(24px, 4vw, 32px);
+            font-weight: 700;
+            font-family: 'Michroma', sans-serif;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+
+        .car-model {
+            font-size: clamp(16px, 2.5vw, 20px);
+            font-family: 'Jura', sans-serif;
+            font-weight: 600;
+            color: black;
+        }
+
+        /* Quick Details Grid */
+        .detail-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .detail-item {
+            background: linear-gradient(135deg, #c7d0da, #767c83);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .detail-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .detail-item i {
+            font-size: 24px;
+            color: #02092b;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .detail-item span {
+            font-size: 14px;
+            font-weight: 600;
+            color: #21252c;
+        }
+
+        /* Description Section */
+        .description-section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 22px;
+            font-weight: 600;
+            font-family: 'Jura', sans-serif;
+            color: #2d3748;
+            margin-bottom: 15px;
+        }
+
+        .description-text {
+            font-size: 15px;
+            color: #4a5568;
+            line-height: 1.7;
+        }
+
+        /* Features Section */
+        .features-section {
+            margin-bottom: 30px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #f8fafc;
+            padding: 12px 16px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .feature-item:hover {
+            background: #e2e8f0;
+            transform: translateX(5px);
+        }
+
+        .feature-item i {
+            color: #48bb78;
+            font-size: 16px;
+        }
+
+        .feature-item span {
+            font-size: 14px;
+            color: #2d3748;
+            font-weight: 500;
+        }
+
+        /* Booking Card */
+        .booking {
+            position: sticky;
+            top: 120px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            height: fit-content;
+        }
+
+        .price-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .price-main {
+            font-size: 28px;
+            font-weight: 700;
+            color: #2d3748;
+            font-family: 'Jura', sans-serif;
+        }
+
+        .price-period {
+            font-size: 14px;
+            color: #718096;
+            font-weight: 500;
+        }
+
+        /* Form Styles */
+        .booking-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #4a5568;
+        }
+
+        .form-input {
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .location-dropdown {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 20px;
+            cursor: pointer;
+        }
+
+        /* Book Button */
+        .book-button {
+            padding: 15px;
+            font-size: 16px;
+            font-weight: 600;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .book-button:hover:not(:disabled) {
+            background: linear-gradient(135deg, #5a67d8, #667eea);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .book-button:disabled {
+            background: #cbd5e0;
+            color: #a0aec0;
+            cursor: not-allowed;
+        }
+
+        .booking-note {
+            font-size: 12px;
+            color: #718096;
+            text-align: center;
+            font-style: italic;
+        }
+
+        /* Status Badge */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .status-available {
+            background: linear-gradient(135deg, #48bb78, #38a169);
+            color: white;
+        }
+
+        .status-unavailable {
+            background: linear-gradient(135deg, #e53e3e, #c53030);
+            color: white;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 60px;
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 1200px) {
+            .vehicle {
+                grid-template-columns: 1fr 350px;
+                gap: 30px;
+            }
+        }
+
+        @media screen and (max-width: 1024px) {
+            .vehicle {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                padding: 15px;
+            }
+
+            .booking {
+                position: static;
+                max-width: 500px;
+                margin: 0 auto;
+            }
+
+            .detail-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .page-container {
+                padding-top: 80px;
+            }
+
+            .vehicle {
+                padding: 15px;
+            }
+
+            .car-details,
+            .booking {
+                padding: 20px;
+                border-radius: 20px;
+            }
+
+            .main-image {
+                height: 250px;
+            }
+
+            .detail-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+
+            .detail-item {
+                padding: 15px 10px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .price-main {
+                font-size: 24px;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .vehicle {
+                padding: 10px;
+            }
+
+            .car-details,
+            .booking {
+                padding: 15px;
+            }
+
+            .main-image {
+                height: 200px;
+            }
+
+            .detail-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .back-button {
+                font-size: 14px;
+                padding: 10px 15px;
+            }
+        }
+
+        /* Loading Animation */
+        .fade-in {
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Focus states for accessibility */
+        .book-button:focus,
+        .form-input:focus {
+            outline: 3px solid rgba(102, 126, 234, 0.4);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page-container">
+        <%- include('../partials/clientnavbar') %>
+
+        <div class="vehicle">
+            <!-- Car Details Section -->
+            <div class="car-details fade-in">
+                <a href="/cars" class="back-button">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    Back to all cars
+                </a>
+
+                <!-- Status Badge -->
+                
+
+                <!-- Image Gallery -->
+                <div class="image-gallery">
+                    <% if (car.images && car.images.length > 0) { %>
+                        <img src="/uploads/<%= car.images[0] %>" alt="<%= car.brand %> <%= car.name %>" class="main-image">
+                    <% } else { %>
+                        <img src="/no-image.png" alt="No Image Available" class="main-image">
+                    <% } %>
+                    <div style="position: absolute;top: 10px;left: 10px;">
+                    <% if (car.available === "Available") { %>
+                        <span class="status-badge status-available">
+                            <i class="fas fa-check-circle"></i>
+                            Available
+                        </span>
+                    <% } else { %>
+                        <span class="status-badge status-unavailable">
+                            <i class="fas fa-times-circle"></i>
+                            Not Available
+                        </span>
+                    <% } %>
+                </div>
+                </div>
+
+                <!-- Car Info Header -->
+                <div class="car-info-header">
+                    <h1 class="car-brand"><%= car.brand %></h1>
+                    <p class="car-model"><%= car.name %> - <%= car.year %></p>
+                </div>
+
+                <!-- Quick Details -->
+                <div class="detail-grid">
+                    <div class="detail-item">
+                        <i class="fa-solid fa-users"></i>
+                        <span><%= car.seating %> Seats</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fa-solid fa-gas-pump"></i>
+                        <span><%= car.fuel %></span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <span><%= car.location || "Available" %></span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fa-solid fa-car-side"></i>
+                        <span><%= car.mode || "Standard" %></span>
+                    </div>
+                </div>
+
+                <!-- Description -->
+                <div class="description-section">
+                    <h2 class="section-title">Description</h2>
+                    <p class="description-text"><%= car.description %></p>
+                </div>
+
+                <!-- Features -->
+                <div class="features-section">
+                    <h2 class="section-title">Features & Amenities</h2>
+                    <div class="features-grid">
+                        <% car.accessories.forEach(feature => { %>
+                            <div class="feature-item">
+                                <i class="fa-solid fa-circle-check"></i>
+                                <span><%= feature.replace(/[{}]/g, '') %></span>
+                            </div>
+                        <% }) %>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Booking Card -->
+            <div class="booking fade-in" style="animation-delay: 0.2s;">
+                <div class="price-section">
+                    <span class="price-main">₹<%= car.price %></span>
+                    <span class="price-period">per day</span>
+                </div>
+
+                <form action="/booking" method="post" class="booking-form">
+                    <input type="hidden" name="car_id" value="<%= car._id %>">
+                    <% if (typeof user !== 'undefined' && user) { %>
+                        <input type="hidden" name="user_id" value="<%= user._id %>">
+                    <% } %>
+
+                    <div class="form-group">
+                        <label class="form-label">Pickup Location</label>
+                        <select name="location" required class="form-input location-dropdown">
+                            <option value="" disabled selected>-- Select Location --</option>
+                            <option value="New Delhi">New Delhi</option>
+                            <option value="Mumbai">Mumbai</option>
+                            <option value="Chennai">Chennai</option>
+                            <option value="Goa">Goa</option>
+                            <option value="Leh & Ladakh">Leh & Ladakh</option>
+                            <option value="Gurugram">Gurugram</option>
+                            <option value="Noida">Noida</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pickup" class="form-label">Pickup Date</label>
+                        <input type="date" name="pickupdate" id="pickup" class="form-input" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="return" class="form-label">Return Date</label>
+                        <input type="date" name="returndate" id="return" class="form-input" required>
+                    </div>
+
+                    <% if (car.available === "Unavailable") { %>
+                        <button type="button" class="book-button" disabled>
+                            <i class="fas fa-times"></i>
+                            Car Not Available
+                        </button>
+                    <% } else { %>
+                        <button type="submit" class="book-button">
+                            <i class="fas fa-calendar-check"></i>
+                            Book Now
+                        </button>
+                    <% } %>
+
+                    <div class="booking-note">
+                        <i class="fas fa-info-circle"></i>
+                        No credit card required for reservation
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <%- include('../partials/footer') %>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set minimum date to today for pickup
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('pickup').min = today;
+            
+            // Update return date minimum when pickup date changes
+            document.getElementById('pickup').addEventListener('change', function() {
+                const pickupDate = new Date(this.value);
+                const nextDay = new Date(pickupDate);
+                nextDay.setDate(pickupDate.getDate() + 1);
+                document.getElementById('return').min = nextDay.toISOString().split('T')[0];
+            });
+
+            // Form validation
+            const form = document.querySelector('.booking-form');
+            form.addEventListener('submit', function(e) {
+                const pickup = new Date(document.getElementById('pickup').value);
+                const returnDate = new Date(document.getElementById('return').value);
+                
+                if (returnDate <= pickup) {
+                    e.preventDefault();
+                    alert('Return date must be after pickup date');
+                    return false;
+                }
+            });
+
+            // Add loading animation
+            const elements = document.querySelectorAll('.fade-in');
+            elements.forEach((element, index) => {
+                element.style.animationDelay = `${index * 0.1}s`;
+            });
+        });
+    </script>
+</body>
+
+</html>

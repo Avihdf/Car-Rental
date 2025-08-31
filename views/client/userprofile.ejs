@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Profile - Driven</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bruno+Ace+SC&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Iceland&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nova+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Michroma&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Jura:wght@300..700&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Aldrich&family=Jura:wght@300..700&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            line-height: 1.6;
+              background: linear-gradient(135deg, #bdc7dd 0%, #bba1a1 100%);
+            min-height: 100vh;
+        }
+
+        .page-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding-top: 100px;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            width: 95%;
+            max-width: 1200px;
+        }
+
+        /* Alert Messages */
+        .alert {
+            position: fixed;
+            top: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 999;
+            max-width: 600px;
+            width: 90%;
+            padding: 15px 20px;
+            border-radius: 12px;
+            font-weight: 500;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: slideDown 0.4s ease-out;
+        }
+
+        .alert-success {
+            background: rgba(72, 187, 120, 0.9);
+            color: white;
+            border: 1px solid rgba(72, 187, 120, 0.3);
+        }
+
+        .alert-error {
+            background: rgba(229, 62, 62, 0.9);
+            color: white;
+            border: 1px solid rgba(229, 62, 62, 0.3);
+        }
+
+        .alert i {
+            font-size: 18px;
+        }
+
+        .alert-close {
+            margin-left: auto;
+            background: none;
+            border: none;
+            color: currentColor;
+            cursor: pointer;
+            font-size: 18px;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .alert-close:hover {
+            opacity: 1;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+
+        /* Main Content */
+        .content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            
+            min-height: calc(100vh - 200px);
+        }
+
+        .form-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 40px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .form-header h2 {
+            font-size: clamp(24px, 4vw, 32px);
+            font-family: 'Jura', sans-serif;
+            color: #2d3748;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .form-header p {
+            color: #718096;
+            font-size: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #4a5568;
+            font-size: 14px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.8);
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        .form-input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            outline: none;
+            background: white;
+        }
+
+        .form-input:valid {
+            border-color: #48bb78;
+        }
+
+        /* Password Input */
+        .password-wrapper {
+            position: relative;
+        }
+
+        .password-wrapper .form-input {
+            padding-right: 48px;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #718096;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+
+        .toggle-password:hover {
+            color: #4a5568;
+        }
+
+        /* License Validation Message */
+        .validation-message {
+            margin-top: 8px;
+            padding: 10px 12px;
+            background: rgba(229, 62, 62, 0.1);
+            border: 1px solid rgba(229, 62, 62, 0.3);
+            border-radius: 8px;
+            color: #c53030;
+            font-size: 13px;
+            line-height: 1.4;
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .validation-message.show {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-5px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 12px;
+            padding: 15px 24px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .submit-btn:hover:not(:disabled) {
+            background: linear-gradient(135deg, #5a67d8, #667eea);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .submit-btn:disabled {
+            background: #cbd5e0;
+            color: #a0aec0;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid transparent;
+            border-top: 2px solid currentColor;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            display: none;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .submit-btn.loading .spinner {
+            display: inline-block;
+        }
+
+        .submit-btn.loading .btn-text {
+            display: none;
+        }
+
+        /* Form Footer */
+        .form-footer {
+            margin-top: 24px;
+            text-align: center;
+            font-size: 14px;
+            color: #718096;
+        }
+
+        .form-footer a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .form-footer a:hover {
+            color: #5a67d8;
+            text-decoration: underline;
+        }
+
+        /* Form Icons */
+        .form-group {
+            position: relative;
+        }
+
+        .form-icon {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #cbd5e0;
+            font-size: 16px;
+            margin-top: 12px;
+            transition: color 0.3s ease;
+        }
+
+        .form-input:focus + .form-icon {
+            color: #667eea;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: auto;
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 768px) {
+            .page-container {
+                padding-top: 80px;
+            }
+
+            .content {
+                margin-top: 40px;
+                padding: 20px 15px;
+                min-height: calc(100vh - 160px);
+            }
+
+            .form-container {
+                padding: 30px 25px;
+                border-radius: 20px;
+                margin: 0 10px;
+            }
+
+            .alert {
+                width: 95%;
+                padding: 12px 16px;
+                font-size: 14px;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .form-container {
+                padding: 25px 20px;
+                margin: 0 5px;
+                
+            }
+
+            .form-group {
+                margin-bottom: 20px;
+            }
+
+            .submit-btn {
+                padding: 12px 20px;
+                font-size: 14px;
+            }
+        }
+
+        /* Focus trap for accessibility */
+        .form-container:focus-within {
+            outline: 3px solid rgba(102, 126, 234, 0.2);
+            outline-offset: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page-container">
+        <%- include('../partials/clientnavbar') %>
+
+        <!-- Alert Messages -->
+        <% if (typeof err !== 'undefined' && err) { %>
+            <div class="alert alert-error" id="alertMessage">
+                <i class="fas fa-exclamation-circle"></i>
+                <span><%= err %></span>
+                <button class="alert-close" onclick="closeAlert()">&times;</button>
+            </div>
+        <% } %>
+
+        <% if (typeof msg !== 'undefined' && msg) { %>
+            <div class="alert alert-success" id="alertMessage">
+                <i class="fas fa-check-circle"></i>
+                <span><%= msg %></span>
+                <button class="alert-close" onclick="closeAlert()">&times;</button>
+            </div>
+        <% } %>
+
+        <div class="content">
+            <form class="form-container" action="/userprofile/<%= user._id %>" method="POST" id="profileForm">
+                <div class="form-header">
+                    <h2>Update Your Profile</h2>
+                    <p>Keep your information up to date</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="name" class="form-label">
+                        <i class="fas fa-user"></i> Full Name
+                    </label>
+                    <input type="text" id="name" name="name" value="<%= user.name %>" class="form-input" required>
+                    <i class="fas fa-user form-icon"></i>
+                </div>
+
+                
+
+                <div class="form-group">
+                    <label for="email" class="form-label">
+                        <i class="fas fa-envelope"></i> Email Address
+                    </label>
+                    <input type="email" id="email" name="email" value="<%= user.email %>" class="form-input" required>
+                    <i class="fas fa-envelope form-icon"></i>
+                </div>
+
+                <div class="form-group">
+                    <label for="number" class="form-label">
+                        <i class="fas fa-phone"></i> Mobile Number
+                    </label>
+                    <input type="tel" id="number" name="number" value="<%= user.number %>" pattern="[0-9]{10}" class="form-input" required>
+                    <i class="fas fa-phone form-icon"></i>
+                </div>
+
+                <div class="form-group">
+                    <label for="dob" class="form-label">
+                        <i class="fas fa-calendar"></i> Date of Birth
+                    </label>
+                    <input type="date" id="dob" name="dob" value="<%= user.dob %>" class="form-input" required>
+                    <i class="fas fa-calendar form-icon"></i>
+                </div>
+
+                <div class="form-group">
+                    <label for="license" class="form-label">
+                        <i class="fas fa-id-badge"></i> Driving License Number
+                    </label>
+                    <input type="text" id="license" name="license" value="<%= user.license %>" 
+                           class="form-input" required pattern="[A-Z]{2}[0-9]{13}" 
+                           oninput="validateLicense(this)" placeholder="e.g., DL1234567890123">
+                    <i class="fas fa-id-badge form-icon"></i>
+                    <div class="validation-message" id="licenseMsg">
+                        <strong>License Format:</strong><br>
+                        • Total 15 characters<br>
+                        • First 2 letters (A–Z)<br>
+                        • Next 13 digits (0–9)<br>
+                        <em>Example: DL1234567890123</em>
+                    </div>
+                </div>
+
+                <button class="submit-btn" type="submit" id="submitBtn">
+                    <div class="spinner"></div>
+                    <span class="btn-text">
+                        <i class="fas fa-save"></i>
+                        Update Profile
+                    </span>
+                </button>
+
+                <div class="form-footer">
+                    Need help? <a href="/contact">Contact Support</a>
+                </div>
+            </form>
+        </div>
+
+        <footer class="footer">
+            <%- include('../partials/footer') %>
+        </footer>
+    </div>
+
+    <script>
+        // License validation function
+        function validateLicense(input) {
+            const msg = document.getElementById("licenseMsg");
+            const regex = /^[A-Z]{2}[0-9]{13}$/;
+            const current = input.value.toUpperCase();
+
+            input.value = current;
+
+            if (current.length > 0 && !regex.test(current)) {
+                msg.classList.add("show");
+                input.style.borderColor = "#e53e3e";
+            } else {
+                msg.classList.remove("show");
+                if (current.length > 0) {
+                    input.style.borderColor = "#48bb78";
+                }
+            }
+        }
+
+        // Close alert function
+        function closeAlert() {
+            const alert = document.getElementById('alertMessage');
+            if (alert) {
+                alert.style.animation = 'slideUp 0.4s ease-out forwards';
+                setTimeout(() => {
+                    alert.remove();
+                }, 400);
+            }
+        }
+
+        // Auto close alerts after 5 seconds
+        setTimeout(() => {
+            const alert = document.getElementById('alertMessage');
+            if (alert) {
+                closeAlert();
+            }
+        }, 5000);
+
+        // Form submission with loading state
+        document.getElementById('profileForm').addEventListener('submit', function(e) {
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.classList.add('loading');
+            submitBtn.disabled = true;
+        });
+
+        // Phone number validation
+        document.getElementById('number').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 10) {
+                value = value.slice(0, 10);
+            }
+            e.target.value = value;
+        });
+
+        // Set max date for date of birth (18 years ago)
+        const dobInput = document.getElementById('dob');
+        const today = new Date();
+        const maxDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
+        dobInput.max = maxDate.toISOString().split('T')[0];
+
+        // Add slideUp animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideUp {
+                from {
+                    opacity: 1;
+                    transform: translateX(-50%) translateY(0);
+                }
+                to {
+                    opacity: 0;
+                    transform: translateX(-50%) translateY(-20px);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Form validation feedback
+        const inputs = document.querySelectorAll('.form-input');
+        inputs.forEach(input => {
+            input.addEventListener('blur', function() {
+                if (this.checkValidity()) {
+                    this.style.borderColor = '#48bb78';
+                } else {
+                    this.style.borderColor = '#e53e3e';
+                }
+            });
+
+            input.addEventListener('input', function() {
+                if (this.style.borderColor === '#e53e3e' && this.checkValidity()) {
+                    this.style.borderColor = '#48bb78';
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

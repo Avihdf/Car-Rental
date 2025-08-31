@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Admin Details</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .maindiv {
+            display: flex;
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            flex-direction: row;
+            background: #f5f5f5;
+        }
+
+        .navbar {
+            width: 16.5%;
+            min-width: 200px;
+            background: #fff;
+            border-right: 1px solid #ddd;
+        }
+
+        .mainpage {
+            position: relative;
+            margin-top: 60px;
+            width: 83.5%;
+            height: calc(100vh - 62px);
+            background: #ffffff;
+            border-radius: 0px 0px 12px 0px;
+            overflow-y: auto;
+            padding: 30px 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .mainpage::-webkit-scrollbar {
+            display: none;
+        }
+
+        .mainpage p:first-child {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .mainpage p:nth-child(2) {
+            font-size: 14px;
+            color: #666;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="text"] {
+            width: 60%;
+            max-width: 500px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            font-size: 16px;
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn {
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s ease-in-out;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn:hover {
+            background: linear-gradient(135deg, #5a0ebd, #1e63d4);
+            transform: scale(1.03);
+        }
+
+        .mainpage a {
+            display: inline-block;
+            margin-top: 10px;
+            color: #000;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.2s;
+        }
+
+        .mainpage a:hover {
+            color: #2575fc;
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .navbar {
+                width: 25%;
+            }
+
+            .mainpage {
+                width: 75%;
+                padding: 20px 15px;
+            }
+
+            input[type="text"] {
+                width: 80%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .maindiv {
+                flex-direction: column;
+            }
+
+            .navbar {
+                width: 100%;
+                min-width: unset;
+                position: relative;
+                border-bottom: 1px solid #ddd;
+            }
+
+            .mainpage {
+                width: 100%;
+                height: auto;
+                border-radius: 0;
+                padding: 20px;
+                box-shadow: none;
+            }
+
+            input[type="text"] {
+                width: 100%;
+                font-size: 15px;
+            }
+
+            .btn {
+                width: 100%;
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .mainpage p:first-child {
+                font-size: 22px;
+            }
+
+            input[type="text"] {
+                font-size: 14px;
+                padding: 8px;
+            }
+
+            .btn {
+                font-size: 14px;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="maindiv">
+        <div class="navbar">
+            <%- include('../partials/navbar') %>
+        </div>
+        <div class="mainpage">
+            <p style="font-size: 30px;font-family: Georgia, 'Times New Roman', Times, serif;">Update Admin Details</p>
+
+            <form action="/admin/profile/<%= admin._id %>" method="post">
+                <label for="name">Name</label><br>
+                <input type="text" id="name" name="name" value="<%= admin.name %>"><br><br>
+
+                <label for="phone">Phone</label><br>
+                <input type="text" id="phone" name="phone" value="<%= admin.number %>"><br><br>
+
+                <label for="email">E-mail</label><br>
+                <input type="text" id="email" name="email" value="<%= admin.email %>"><br><br>
+
+                <button class="btn">Update Details</button>
+            </form>
+            <a style="color: black;" href="/admin/changepassword">Update Password?</a>
+            <% if (msg) { %>
+                <script>alert("<%= msg %>")</script>
+            <% } %>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Bookings - Driven Admin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        :root {
+            --navbar-width: 16.5%;
+            --navbar-height: 62px;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+        }
+
+        .maindiv {
+            display: flex;
+            min-height: 100vh;
+            width: 100%;
+        }
+
+        .navbar {
+            width: var(--navbar-width);
+            background: #fff;
+            box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            z-index: 10;
+        }
+
+        .mainpage {
+            margin-left: var(--navbar-width);
+            margin-top: var(--navbar-height);
+            width: calc(100% - var(--navbar-width));
+            min-height: calc(100vh - var(--navbar-height));
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 0px 0px 0px 0px;
+            overflow-y: auto;
+            padding: 15px 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease-in-out;
+
+        }
+
+        .mainpage::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .mainpage::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+
+        .mainpage::-webkit-scrollbar-thumb {
+            background: rgba(102, 126, 234, 0.3);
+            border-radius: 4px;
+        }
+
+        .mainpage::-webkit-scrollbar-thumb:hover {
+            background: rgba(102, 126, 234, 0.5);
+        }
+
+        /* Page Header */
+        .page-header {
+            text-align: center;
+            margin-bottom: 0px;
+            padding-bottom: 25px;
+            border-bottom: 2px solid rgba(102, 126, 234, 0.1);
+        }
+
+        .page-title {
+            font-size: clamp(24px, 4vw, 36px);
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .page-subtitle {
+            color: #718096;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .booking-stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 14px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        /* Table Container */
+        .table-container {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 25px;
+            margin-top: -40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            overflow: hidden;
+        }
+
+        /* Table Styling */
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-spacing: 0 15px;
+            border-collapse: separate;
+        }
+
+        thead th {
+            padding: 18px 15px;
+            font-size: 14px;
+            text-align: center;
+            background: linear-gradient(#121213);
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: none;
+        }
+
+        thead th:first-child {
+            border-radius: 15px 0 0 0;
+        }
+
+        thead th:last-child {
+            border-radius: 0 15px 0 0;
+        }
+
+        tbody tr {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        tbody tr:hover {
+            background: rgba(255, 255, 255, 0.95);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        tbody td {
+            padding: 20px 15px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 500;
+            vertical-align: middle;
+            border: none;
+            color: #4a5568;
+        }
+
+        tbody td:first-child {
+            border-radius: 15px 0 0 15px;
+        }
+
+        tbody td:last-child {
+            border-radius: 0 15px 15px 0;
+        }
+
+        /* Car Details */
+        .car-details {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .car-image {
+            border-radius: 12px;
+            width: 120px;
+            height: 80px;
+            object-fit: cover;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .car-info h4 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #2d3748;
+            margin: 0 0 5px 0;
+        }
+
+        .car-info p {
+            font-size: 14px;
+            color: #718096;
+            margin: 0;
+        }
+
+        /* Client Details */
+        .client-details h4 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #2d3748;
+            margin: 0 0 8px 0;
+        }
+
+        .client-details p {
+            font-size: 14px;
+            color: #718096;
+            margin: 3px 0;
+        }
+
+        /* Status Styling */
+        .status-select {
+            padding: 8px 15px;
+            border-radius: 20px;
+            border: 2px solid rgba(102, 126, 234, 0.3);
+            background: rgba(255, 255, 255, 0.9);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .status-select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .status-confirmed {
+            color: #38a169;
+            font-weight: 700;
+            padding: 8px 16px;
+            background: rgba(72, 187, 120, 0.1);
+            border-radius: 20px;
+            border: 2px solid rgba(72, 187, 120, 0.3);
+        }
+
+        .status-cancelled {
+            color: #c53030;
+            font-weight: 700;
+            padding: 8px 16px;
+            background: rgba(229, 62, 62, 0.1);
+            border-radius: 20px;
+            border: 2px solid rgba(229, 62, 62, 0.3);
+        }
+
+        /* Dropdown Actions */
+        .dropdown1 {
+            position: relative;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .cancel-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #e53e3e, #c53030);
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px; 
+        }
+
+        .cancel-btn:hover {
+            background: linear-gradient(135deg, #c53030, #9c2626);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(229, 62, 62, 0.4);
+        }
+
+        .dropdown-content1 {
+            display: none;
+            position: absolute;
+            top: 45px;
+            left: -20px;
+            transform: translateX(-50%);
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            min-width: 220px;
+            z-index: 1000;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+
+        .dropdown1:hover .dropdown-content1 {
+            display: block;
+        }
+
+        .dropdown-content1 p {
+            font-size: 14px;
+            color: #4a5568;
+            margin-bottom: 15px;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .confirmation-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .confirm-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .confirm-yes {
+            background: linear-gradient(135deg, #e53e3e, #c53030);
+            color: white;
+        }
+
+        .confirm-yes:hover {
+            background: linear-gradient(135deg, #c53030, #9c2626);
+            transform: translateY(-2px);
+        }
+
+        .confirm-no {
+            background: linear-gradient(135deg, #718096, #4a5568);
+            color: white;
+        }
+
+        .confirm-no:hover {
+            background: linear-gradient(135deg, #4a5568, #2d3748);
+            transform: translateY(-2px);
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 80px 20px;
+            color: #718096;
+        }
+
+        .empty-state i {
+            font-size: 64px;
+            color: #cbd5e0;
+            margin-bottom: 20px;
+        }
+
+        .empty-state h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #4a5568;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            :root {
+                --navbar-width: 200px;
+            }
+
+            .booking-stats {
+                gap: 20px;
+            }
+
+            .car-image {
+                width: 100px;
+                height: 70px;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            :root {
+                --navbar-width: 5%;
+            }
+
+            .mainpage {
+                margin-left: 5%;
+                width: 93%;
+                padding: 25px 20px;
+            }
+
+            .booking-stats {
+                gap: 15px;
+            }
+
+            .stat-item {
+                font-size: 12px;
+                padding: 10px 15px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            :root {
+                --navbar-width: 100%;
+                --navbar-height: 55px;
+            }
+
+            .navbar {
+                width: 100%;
+                height: var(--navbar-height);
+                position: fixed;
+                top: 0;
+                left: 0;
+                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            }
+
+            .mainpage {
+                margin-left: 0;
+                margin-top: var(--navbar-height);
+                width: 100%;
+                padding: 20px 15px;
+                border-radius: 0;
+            }
+
+            .booking-stats {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+
+            /* Hide table header, keep body visible */
+            .table-wrapper table thead {
+                display: none;
+            }
+
+            .table-wrapper table,
+            .table-wrapper tbody {
+                display: block;
+                width: 100%;
+            }
+
+            /* Style each booking row as a card */
+            .table-wrapper tbody tr {
+                display: block;
+                margin-bottom: 20px;
+                padding: 15px;
+                border-radius: 12px;
+                background: rgba(255, 255, 255, 0.9);
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+                border: 1px solid rgba(102, 126, 234, 0.2);
+            }
+
+            .table-wrapper tbody td {
+                display: flex;
+                justify-content: space-between;
+                padding: 10px 0;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+                font-size: 14px;
+            }
+
+            .table-wrapper tbody td:last-child {
+                border-bottom: none;
+            }
+
+            /* Show labels from data-label attribute */
+            .table-wrapper tbody td::before {
+                content: attr(data-label);
+                font-weight: bold;
+                color: #4a5568;
+                margin-right: 10px;
+                text-transform: uppercase;
+                font-size: 12px;
+            }
+
+            /* Adjust car images for mobile */
+            .car-image {
+                width: 100%;
+                max-width: 250px;
+                height: 150px;
+                object-fit: cover;
+                margin: 10px 0;
+            }
+        }
+
+
+        /* .dropdown-content1 {
+            left: 50%;
+            transform: translateX(-50%);
+            min-width: 200px;
+        } */
+        
+
+        @media (max-width: 480px) {
+            .mainpage {
+                padding: 15px 10px;
+            }
+
+            .table-container {
+                padding: 15px;
+            }
+
+            tbody tr {
+                padding: 15px;
+                margin-bottom: 20px;
+            }
+
+            .car-image {
+                height: 120px;
+            }
+
+            .cancel-btn {
+                font-size: 12px;
+                padding: 6px 12px;
+            }
+
+            .dropdown-content1 {
+                min-width: 180px;
+                padding: 15px;
+            }
+        }
+
+        /* Animation for table rows */
+        tbody tr {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Stagger animation for rows */
+        tbody tr:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        tbody tr:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        tbody tr:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        tbody tr:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        tbody tr:nth-child(5) {
+            animation-delay: 0.5s;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="maindiv">
+        <div class="navbar">
+            <%- include('../partials/navbar') %>
+        </div>
+
+        <div class="mainpage">
+            <div class="page-header">
+                <h1 class="page-title">
+                    <i class="fas fa-calendar-check"></i>
+                    Booking Management
+                </h1>
+                <p class="page-subtitle">Track all customer bookings, approve or cancel requests, and manage booking
+                    status</p>
+
+                <div class="booking-stats">
+                    <div class="stat-item">
+                        <i class="fas fa-calendar"></i>
+                        Total Bookings: <%= booking.length %>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-clock"></i>
+                        Pending: <%= booking.filter(b=> b.status === 'Pending').length %>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-check"></i>
+                        Confirmed: <%= booking.filter(b=> b.status === 'Confirmed').length %>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-times"></i>
+                        Cancelled: <%= booking.filter(b=> b.status === 'Cancelled').length %>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <% if (booking && booking.length> 0) { %>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Booking No.</th>
+                                    <th>Client Details</th>
+                                    <th>Car Details</th>
+                                    <th>Booking Period</th>
+                                    <th>Price</th>
+                                    <th>Booking Date</th>
+                                    <th>Pickup Location</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% booking.forEach((b, i)=> { %>
+                                    <tr style=`animation-delay: <%=i * 0.1 %>s;`>
+                                        <td data-label="Booking No.">
+                                            <strong>#<%= b.booking_number %></strong>
+                                        </td>
+
+                                        <td data-label="Client Details">
+                                            <div class="client-details">
+                                                <h4>
+                                                    <%= b.user_id.name %>
+                                                </h4>
+                                                <p><i class="fas fa-envelope"></i>
+                                                    <%= b.user_id.email %>
+                                                </p>
+                                                <p><i class="fas fa-phone"></i> +91 <%= b.user_id.number %>
+                                                </p>
+                                            </div>
+                                        </td>
+
+                                        <td data-label="Car Details">
+                                            <div class="car-details">
+                                                <img src="/uploads/<%= b.car_id.images[0] %>"
+                                                    alt="<%= b.car_id.brand %>" class="car-image" />
+                                                <div class="car-info">
+                                                    <h4>
+                                                        <%= b.car_id.brand %>
+                                                    </h4>
+                                                    <p>
+                                                        <%= b.car_id.name %> - <%= b.car_id.year %>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td data-label="Booking Period">
+                                            <strong>
+                                                <%= b.pickupdate %>
+                                            </strong><br>
+                                            <span style="color: #718096;">to</span><br>
+                                            <strong>
+                                                <%= b.returndate %>
+                                            </strong>
+                                        </td>
+
+                                        <td data-label="Price">
+                                            <strong style="color: #667eea;">₹<%= b.car_id.price %></strong>
+                                        </td>
+
+                                        <td data-label="Booking Date">
+                                            <%= b.dateformat %>
+                                        </td>
+
+                                        <td data-label="Pickup Location">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            <%= b.location || 'Location' %>
+                                        </td>
+
+                                        <td data-label="Status">
+                                            <% if (b.status==='Pending' ) { %>
+                                                <form action="/admin/bookingstatus" method="POST">
+                                                    <input type="hidden" name="booking_id" value="<%= b._id %>" />
+                                                    <select name="status" class="status-select"
+                                                        onchange="this.form.submit()">
+                                                        <option value="Pending" selected>Pending</option>
+                                                        <option value="Confirmed">Confirmed</option>
+                                                        <option value="Cancelled">Cancelled</option>
+                                                    </select>
+                                                </form>
+                                                <% } else if (b.status==='Confirmed' ) { %>
+                                                    <div class="status-confirmed">
+                                                        <i class="fas fa-check-circle"></i> Confirmed
+                                                    </div>
+                                                    <div class="dropdown1">
+                                                        <button class="cancel-btn">
+                                                            <i class="fas fa-times"></i> Cancel
+                                                        </button>
+                                                        <div class="dropdown-content1">
+                                                            <p>Are you sure you want to cancel this booking?</p>
+                                                            <form action="/admin/cancelbooking/<%= b._id %>"
+                                                                method="post">
+                                                                <input type="hidden" name="booking_id"
+                                                                    value="<%= b._id %>">
+                                                                <input type="hidden" value="Cancelled" name="status">
+                                                                <div class="confirmation-buttons">
+                                                                    <button type="submit"
+                                                                        class="confirm-btn confirm-yes">
+                                                                        <i class="fas fa-check"></i> Yes
+                                                                    </button>
+                                                                    <button type="button" class="confirm-btn confirm-no"
+                                                                        onclick="closeDropdown(this)">
+                                                                        <i class="fas fa-times"></i> No
+                                                                    </button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                    <% } else if (b.status==='Cancelled' ) { %>
+                                                        <div class="status-cancelled">
+                                                            <i class="fas fa-ban"></i> Cancelled
+                                                        </div>
+                                                        <% } %>
+                                        </td>
+                                    </tr>
+                                    <% }); %>
+                            </tbody>
+                        </table>
+                    </div>
+                    <% } else { %>
+                        <div class="empty-state">
+                            <i class="fas fa-calendar-times"></i>
+                            <h3>No Bookings Found</h3>
+                            <p>No booking requests have been made yet.</p>
+                        </div>
+                        <% } %>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Close dropdown when clicking No
+        function closeDropdown(button) {
+            const dropdown = button.closest('.dropdown1');
+            const dropdownContent = dropdown.querySelector('.dropdown-content1');
+            dropdownContent.style.display = 'none';
+        }
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function (event) {
+            const dropdowns = document.querySelectorAll('.dropdown-content1');
+            dropdowns.forEach(dropdown => {
+                if (!dropdown.closest('.dropdown1').contains(event.target)) {
+                    dropdown.style.display = 'none';
+                }
+            });
+        });
+
+        // Animate table rows on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function (entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Initialize animations
+        document.addEventListener('DOMContentLoaded', function () {
+            const rows = document.querySelectorAll('tbody tr');
+            rows.forEach(row => {
+                observer.observe(row);
+            });
+        });
+    </script>
+</body>
+
+</html>

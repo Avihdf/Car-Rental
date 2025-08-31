@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Admin Portal - Driven</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bruno+Ace+SC&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Iceland&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f4f4f4;
+            transition: all 0.3s ease;
+        }
+
+        /* ---------- TOP NAVBAR ---------- */
+        .topnavbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            height: 60px;
+            background: linear-gradient(135deg, #1f1c2c, #928dab);
+            border-radius: 0px 12px 0px 12px;
+            color: white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1001;
+        }
+
+        .brand-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand-logo {
+            font-family: 'Bruno Ace SC', cursive;
+            font-size: clamp(18px, 3vw, 24px);
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .brand-logo:hover {
+            color: #ffc107;
+            transition: color 0.3s ease;
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-left: auto;
+        }
+
+        #profile {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 16px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 8px 16px;
+            border-radius: 25px;
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        #profile:hover {
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 10px rgba(255, 193, 7, 0.3);
+            transform: translateY(-1px);
+        }
+
+        #logout {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 14px;
+            background: rgba(220, 53, 69, 0.8);
+            border: 1px solid rgba(220, 53, 69, 0.3);
+            padding: 8px 16px;
+            border-radius: 25px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        #logout:hover {
+            background: rgba(220, 53, 69, 1);
+            box-shadow: 0 0 10px rgba(220, 53, 69, 0.4);
+            transform: translateY(-1px);
+        }
+
+        /* ---------- SIDE NAVBAR ---------- */
+        .sidenavbar {
+            position: fixed;
+            top: 60px;
+            left: 0;
+            width: 223px;
+            height: calc(100vh - 61px);
+            background: linear-gradient(180deg, #2c3e50, #3498db);
+            border-radius: 10px 0px 0px 10px;
+            box-shadow: 4px 0 15px rgba(0, 0, 0, 0.15);
+            padding: 25px 20px;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .sidebar-title {
+            color: white;
+            font-size: 20px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .nav-item {
+            margin-bottom: 8px;
+        }
+
+        .sidenavbar a,
+        .dropbtn5 {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            padding: 12px 16px;
+            border-radius: 10px;
+            background: transparent;
+            transition: all 0.3s ease;
+            text-align: left;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .sidenavbar a:hover,
+        .dropbtn5:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: #ffc107;
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidenavbar a.active {
+            background: rgba(255, 193, 7, 0.2);
+            color: #ffc107;
+            border-left: 4px solid #ffc107;
+        }
+
+        .sidenavbar a i,
+        .dropbtn5 i {
+            width: 20px;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        /* Dropdown */
+        .dropdown5 {
+            position: relative;
+        }
+
+        .dropdown-content5 {
+            display: none;
+            margin-top: 8px;
+            margin-left: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .dropdown-content5 a {
+            color: #333;
+            font-size: 14px;
+            padding: 12px 16px;
+            border-radius: 0;
+            background: transparent;
+        }
+
+        .dropdown-content5 a:hover {
+            background: rgba(52, 152, 219, 0.1);
+            color: #3498db;
+            transform: none;
+        }
+
+        .dropdown5:hover .dropdown-content5 {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ---------- HAMBURGER ---------- */
+        .hamburger {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffc107;
+        }
+
+        /* Main Content Area */
+        .main-content {
+            margin-left: 280px;
+            margin-top: 60px;
+            padding: 30px;
+            min-height: calc(100vh - 60px);
+            transition: margin-left 0.3s ease;
+        }
+
+        /* ---------- RESPONSIVE DESIGN ---------- */
+        @media (max-width: 1200px) {
+            .sidenavbar {
+                width: 260px;
+            }
+            
+            .main-content {
+                margin-left: 260px;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .sidenavbar {
+                width: 280px;
+                transform: translateX(-100%);
+                z-index: 1000;
+            }
+
+            .sidenavbar.active {
+                transform: translateX(0);
+            }
+
+            .hamburger {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+            }
+
+            body.active-overlay::before {
+                content: "";
+                position: fixed;
+                top: 60px;
+                left: 0;
+                width: 100%;
+                height: calc(100% - 60px);
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 999;
+                animation: fadeIn 0.3s ease;
+            }
+
+            @keyframes fadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+
+            .profile {
+                gap: 8px;
+            }
+
+            #profile {
+                font-size: 14px;
+                padding: 6px 12px;
+            }
+
+            #logout {
+                font-size: 13px;
+                padding: 6px 12px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .topnavbar {
+                padding: 0 15px;
+            }
+
+            .profile {
+                gap: 6px;
+            }
+
+            #profile {
+                font-size: 13px;
+                padding: 6px 10px;
+                gap: 6px;
+            }
+
+            #logout {
+                font-size: 12px;
+                padding: 6px 10px;
+                gap: 4px;
+            }
+
+            .brand-logo {
+                font-size: 18px;
+            }
+
+            .main-content {
+                padding: 15px;
+            }
+
+            .sidenavbar {
+                width: 260px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .topnavbar {
+                padding: 0 10px;
+            }
+
+            .profile {
+                gap: 4px;
+            }
+
+            #profile {
+                font-size: 12px;
+                padding: 5px 8px;
+            }
+
+            #logout {
+                font-size: 11px;
+                padding: 5px 8px;
+            }
+
+            .brand-logo {
+                font-size: 16px;
+            }
+
+            .hamburger {
+                font-size: 20px;
+            }
+
+            .main-content {
+                padding: 10px;
+            }
+
+            .sidenavbar {
+                width: 240px;
+                padding: 20px 15px;
+            }
+
+            .sidenavbar a,
+            .dropbtn5 {
+                font-size: 14px;
+                padding: 10px 12px;
+            }
+        }
+
+        @media (max-width: 320px) {
+            .profile {
+                flex-direction: column;
+                gap: 2px;
+            }
+
+            #profile,
+            #logout {
+                font-size: 10px;
+                padding: 4px 6px;
+            }
+
+            .sidenavbar {
+                width: 220px;
+            }
+        }
+
+        /* Scrollbar Styling */
+        .sidenavbar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .sidenavbar::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+        }
+
+        .sidenavbar::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 3px;
+        }
+
+        .sidenavbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- TOP NAVBAR -->
+    <div class="topnavbar">
+        <div class="brand-section">
+            <span class="hamburger" id="hamburger">
+                <i class="fa-solid fa-bars"></i>
+            </span>
+            <a href="/admin/dashboard" class="brand-logo">Driven Admin</a>
+        </div>
+
+        <div class="profile">
+            <a href="/admin/profile/<%= admin.id %>" id="profile">
+                <i class="fa-solid fa-circle-user"></i>
+                <span><%= admin.name %></span>
+            </a>
+            <form action="/admin/logout" method="post" style="margin: 0;">
+                <button id="logout" type="submit">
+                    <i class="fa-solid fa-power-off"></i>
+                    <span>Logout</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- SIDE NAVBAR -->
+    <div class="sidenavbar" id="sidebar">
+        <div class="sidebar-header">
+            <h3 class="sidebar-title">Admin Panel</h3>
+        </div>
+
+        <div class="nav-item">
+            <a href="/admin/dashboard" class="nav-link">
+                <i class="fa-solid fa-chart-line"></i>
+                <span>Dashboard</span>
+            </a>
+        </div>
+
+        <div class="nav-item">
+            <a href="/admin/addvehicle" class="nav-link">
+                <i class="fa-solid fa-plus"></i>
+                <span>Add Vehicles</span>
+            </a>
+        </div>
+
+        <div class="nav-item">
+            <a href="/admin/vehiclelist" class="nav-link">
+                <i class="fa-solid fa-car"></i>
+                <span>Vehicle List</span>
+            </a>
+        </div>
+
+        <div class="nav-item">
+            <a href="/admin/clients" class="nav-link">
+                <i class="fa-solid fa-users"></i>
+                <span>Client List</span>
+            </a>
+        </div>
+
+        <div class="nav-item">
+            <a href="/admin/Bookings" class="nav-link">
+                <i class="fa-solid fa-book"></i>
+                <span>Bookings</span>
+            </a>
+        </div>
+
+        <div class="nav-item dropdown5">
+            <button class="dropbtn5">
+                <i class="fa-solid fa-sliders"></i>
+                <span>Manage Page</span>
+                <i class="fa-solid fa-chevron-down" style="margin-left: auto; font-size: 12px;"></i>
+            </button>
+            <div class="dropdown-content5">
+                <a href="/admin/displayvehicle">
+                    <i class="fa-solid fa-display"></i>
+                    <span>Display Vehicles</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const sidebar = document.getElementById('sidebar');
+        const body = document.body;
+        const mainContent = document.getElementById('mainContent');
+
+        // Toggle sidebar
+        hamburger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            sidebar.classList.toggle('active');
+            body.classList.toggle('active-overlay');
+        });
+
+        // Close sidebar when clicking outside
+        body.addEventListener('click', (e) => {
+            if (!sidebar.contains(e.target) && !hamburger.contains(e.target) && sidebar.classList.contains('active')) {
+                sidebar.classList.remove('active');
+                body.classList.remove('active-overlay');
+            }
+        });
+
+        // Close sidebar when clicking on overlay
+        body.addEventListener('click', (e) => {
+            if (e.target === body && body.classList.contains('active-overlay')) {
+                sidebar.classList.remove('active');
+                body.classList.remove('active-overlay');
+            }
+        });
+
+        // Active link highlighting
+        function setActiveLink() {
+            const currentPath = window.location.pathname;
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === currentPath) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && sidebar.classList.contains('active')) {
+                sidebar.classList.remove('active');
+                body.classList.remove('active-overlay');
+            }
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            setActiveLink();
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 1024 && sidebar.classList.contains('active')) {
+                sidebar.classList.remove('active');
+                body.classList.remove('active-overlay');
+            }
+        });
+    </script>
+</body>
+
+</html>

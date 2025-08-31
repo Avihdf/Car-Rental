@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Reviews - Stay Venture</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Jura:wght@400;600;700;800&family=Georgia:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 20px 0;
+        }
+
+        .review-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: clamp(24px, 4vw, 36px);
+            font-weight: 800;
+            font-family: 'Jura', sans-serif;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: clamp(14px, 2vw, 16px);
+            color: #666;
+            line-height: 1.6;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Reviews Grid - Responsive */
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+            padding: 20px 0;
+        }
+
+        .review-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .review-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+        }
+
+        .review-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .review-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .review-header .fa-circle-user {
+            font-size: 40px;
+            color: #6e8efb;
+            margin-right: 15px;
+        }
+
+        .user-info h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .review-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 15px;
+        }
+
+        .location {
+            display: flex;
+            align-items: center;
+        }
+
+        .location::before {
+            content: '📍';
+            margin-right: 5px;
+        }
+
+        .review-text {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #555;
+            font-style: italic;
+        }
+
+        /* Star Rating */
+        .star-rating {
+            display: flex;
+            margin-bottom: 10px;
+        }
+
+        .star {
+            color: #ffd700;
+            font-size: 18px;
+            margin-right: 2px;
+        }
+
+        .auth{
+            display: flex;
+            justify-content: center;
+            justify-items: center;
+            margin-bottom: 20px;
+        }
+
+        /* Review Form - Responsive */
+        .review-form-container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            margin-top: 40px;
+        }
+
+        .review-form h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #2c3e50;
+            font-family: 'Jura', sans-serif;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #555;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e1e8ed;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .form-input:focus {
+            border-color: #6e8efb;
+            box-shadow: 0 0 0 3px rgba(110, 142, 251, 0.1);
+            outline: none;
+        }
+
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 10px;
+            padding: 15px 30px;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .submit-btn:hover {
+            background: linear-gradient(135deg, #5a7bf9, #9a64e0);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(110, 142, 251, 0.3);
+        }
+
+        /* Login Section */
+        .login-section {
+            text-align: center;
+            padding: 40px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-link {
+            display: inline-flex;
+            align-items: center;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .login-link:hover {
+            background: linear-gradient(135deg, #5a7bf9, #9a64e0);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(110, 142, 251, 0.3);
+        }
+
+        .login-link i {
+            margin-right: 10px;
+            font-size: 18px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .review-container {
+                padding: 0 15px;
+            }
+
+            .reviews-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .review-card {
+                padding: 20px;
+            }
+
+            .review-form-container {
+                padding: 20px;
+            }
+
+            .review-meta {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header p br {
+                display: none;
+            }
+
+            .review-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .review-header .fa-circle-user {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+        }
+
+        /* Animation for loading */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .review-card {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .review-card:nth-child(1) { animation-delay: 0.1s; }
+        .review-card:nth-child(2) { animation-delay: 0.2s; }
+        .review-card:nth-child(3) { animation-delay: 0.3s; }
+        .review-card:nth-child(4) { animation-delay: 0.4s; }
+
+        /* Loading skeleton for better UX */
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="review-container">
+        <div class="header">
+            <h1>What Our Customers Say</h1>
+            <p>
+                Discover why discerning travelers choose Stay Venture for their luxury accommodations around the world. 
+                Your experience matters to us, and we're proud to share these authentic reviews from our valued guests.
+            </p>
+        </div>
+
+        <div class="reviews-grid">
+            <% if (typeof review !== 'undefined' && review && review.length > 0) { %>
+                <% review.forEach((r, index) => { %>
+                    <div class="review-card" >
+                        <div class="review-header">
+                            <i class="fa-solid fa-circle-user"></i>
+                            <div class="user-info">
+                                <h3><%= r.user_id.name || 'Anonymous Guest' %></h3>
+                                <div class="star-rating">
+                                    <% for(let i = 1; i <= 5; i++) { %>
+                                        <span class="star">
+                                            <i class="fa-solid fa-star"></i>
+                                        </span>
+                                    <% } %>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="review-meta">
+                            <span class="location"><%= r.user_id.location || 'Verified Guest' %></span>
+                            <span class="date">
+                                <i class="fa-regular fa-calendar"></i>
+                                <%= new Date(r.date).toLocaleDateString('en-US', { 
+                                    year: 'numeric', 
+                                    month: 'short', 
+                                    day: 'numeric' 
+                                }) %>
+                            </span>
+                        </div>
+                        
+                        <p class="review-text">
+                            "<%= r.review %>"
+                        </p>
+                    </div>
+                <% }); %>
+            <% } else { %>
+                <div class="review-card">
+                    <p style="text-align: center; color: #888; font-style: italic;">
+                        No reviews available yet. Be the first to share your experience!
+                    </p>
+                </div>
+            <% } %>
+        </div>
+
+        <div class="auth">
+            <% if (typeof user !== 'undefined' && user) { %>
+                <div class="review-form-container">
+                    <h2>Share Your Experience</h2>
+                    <form action="/review/<%= user._id %>" method="post">
+                        <div class="form-group">
+                            <label for="rating">Rate Your Stay</label>
+                            <div class="star-rating" id="starRating">
+                                <% for(let i = 1; i <= 5; i++) { %>
+                                    <span class="star" data-rating="<%= i %>">
+                                        <i class="fa-regular fa-star"></i>
+                                    </span>
+                                <% } %>
+                            </div>
+                            <input type="hidden" name="rating" id="ratingInput" value="5">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="reviews">Your Review</label>
+                            <textarea 
+                                class="form-input form-textarea" 
+                                name="reviews" 
+                                id="reviews"
+                                placeholder="Tell us about your stay. What made it special? How was the service, amenities, and overall experience?"
+                                required
+                                maxlength="500"
+                            ></textarea>
+                            <small style="color: #888;">Maximum 500 characters</small>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">
+                            <i class="fa-solid fa-paper-plane"></i>
+                            Submit Review
+                        </button>
+                    </form>
+                </div>
+            <% } else { %>
+                <div class="login-section">
+                    <h2 style="margin-bottom: 20px; color: #2c3e50;">Want to Leave a Review?</h2>
+                    <p style="margin-bottom: 25px; color: #666;">
+                        Join our community of travelers and share your experience with Stay Venture.
+                    </p>
+                    <a href="/login" class="login-link">
+                        <i class="fa-solid fa-user"></i>
+                        Login to Review
+                    </a>
+                </div>
+            <% } %>
+        </div>
+    </div>
+
+    <script>
+        // Interactive star rating
+        document.addEventListener('DOMContentLoaded', function() {
+            const stars = document.querySelectorAll('#starRating .star');
+            const ratingInput = document.getElementById('ratingInput');
+            
+            stars.forEach((star, index) => {
+                star.addEventListener('click', function() {
+                    const rating = index + 1;
+                    ratingInput.value = rating;
+                    
+                    // Update star display
+                    stars.forEach((s, i) => {
+                        const icon = s.querySelector('i');
+                        if (i < rating) {
+                            icon.className = 'fa-solid fa-star';
+                            s.style.color = '#ffd700';
+                        } else {
+                            icon.className = 'fa-regular fa-star';
+                            s.style.color = '#ddd';
+                        }
+                    });
+                });
+                
+                star.addEventListener('mouseover', function() {
+                    const rating = index + 1;
+                    stars.forEach((s, i) => {
+                        const icon = s.querySelector('i');
+                        if (i < rating) {
+                            icon.className = 'fa-solid fa-star';
+                            s.style.color = '#ffd700';
+                        } else {
+                            icon.className = 'fa-regular fa-star';
+                            s.style.color = '#ddd';
+                        }
+                    });
+                });
+            });
+            
+            // Character counter for textarea
+            const textarea = document.getElementById('reviews');
+            if (textarea) {
+                const maxLength = textarea.getAttribute('maxlength');
+                const counter = document.createElement('div');
+                counter.style.cssText = 'text-align: right; font-size: 12px; color: #888; margin-top: 5px;';
+                counter.textContent = `0/${maxLength}`;
+                textarea.parentNode.appendChild(counter);
+                
+                textarea.addEventListener('input', function() {
+                    const currentLength = this.value.length;
+                    counter.textContent = `${currentLength}/${maxLength}`;
+                    counter.style.color = currentLength > maxLength * 0.9 ? '#e74c3c' : '#888';
+                });
+            }
+        });
+
+        // Smooth scroll animation for new reviews
+        function animateNewReview() {
+            const reviewCards = document.querySelectorAll('.review-card');
+            reviewCards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+            });
+        }
+    </script>
+</body>
+
+</html>

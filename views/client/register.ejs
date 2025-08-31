@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Rental - Registration</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            background: linear-gradient(135deg, #f0f4ff, #dfe9f3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .form-container {
+            background: white;
+            padding: 30px 25px;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 450px;
+            animation: fadeIn 0.6s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #4b4b4b;
+            font-size: 26px;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+            color: #333;
+            font-size: 14px;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 15px;
+            transition: border 0.3s, box-shadow 0.3s;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #6e8efb;
+            box-shadow: 0 0 8px rgba(110, 142, 251, 0.4);
+            outline: none;
+        }
+
+        .password-wrapper {
+            position: relative;
+        }
+
+        .password-wrapper input {
+            padding-right: 40px;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #888;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        .toggle-password:hover {
+            color: #6e8efb;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 10px;
+            padding: 12px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 12px;
+            font-weight: bold;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .submit-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .form-footer {
+            margin-top: 18px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .form-footer a {
+            color: #6e8efb;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .form-footer a:hover {
+            text-decoration: underline;
+        }
+
+        small {
+            font-size: 12px;
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .form-container {
+                padding: 20px;
+                border-radius: 12px;
+            }
+
+            h2 {
+                font-size: 22px;
+            }
+
+            input, select, textarea {
+                font-size: 14px;
+                padding: 10px;
+            }
+
+            .submit-btn {
+                font-size: 15px;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <form class="form-container" action="/register" method="POST">
+        <h2>Create Account</h2>
+
+        <div class="form-group">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" placeholder="John Doe" required>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="example@email.com" required>
+        </div>
+
+        <div class="form-group">
+            <label for="number">Mobile Number</label>
+            <input type="tel" id="number" name="number" pattern="[0-9]{10}" placeholder="1234567890" required>
+        </div>
+
+        <div class="form-group">
+            <label for="dob">Date of Birth</label>
+            <input type="date" id="dob" name="dob" required>
+        </div>
+
+        <div class="form-group">
+            <label for="gender">Gender</label>
+            <select name="gender" id="gender" required>
+                <option value="" disabled selected>Select gender</option>
+                <option>Male</option>
+                <option>Female</option>
+                <option>Other</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="license">Driving License Number</label>
+            <input type="text" id="license" name="license" required 
+                   pattern="[A-Z]{2}[0-9]{13}" 
+                   placeholder="DL1234567890123"
+                   oninput="validateLicense(this)">
+            <small id="licenseMsg" style="color: red; display: none;">
+                Total 15 characters: <br> 2 letters (A–Z) + 13 digits (0–9)
+            </small>
+        </div>
+
+        <div class="form-group">
+            <label for="address">Address</label>
+            <textarea id="address" name="address" rows="2" placeholder="123, Main Street, City" required></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password</label>
+            <div class="password-wrapper">
+                <input type="password" id="password" name="password" minlength="6" placeholder="Enter password" required>
+                <i class="fa-solid fa-eye toggle-password" onclick="togglePassword('password', this)"></i>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="confirmpassword">Confirm Password</label>
+            <div class="password-wrapper">
+                <input type="password" id="confirmpassword" name="confirmpassword" minlength="6" placeholder="Re-enter password" required>
+                <i class="fa-solid fa-eye toggle-password" onclick="togglePassword('confirmpassword', this)"></i>
+            </div>
+        </div>
+
+        <% if (err) { %>
+        <div style="color: red; text-align: center; margin-bottom: 10px;">
+            <%= err %>
+        </div>
+        <% } %>
+
+        <button class="submit-btn" type="submit">Register</button>
+
+        <div class="form-footer">
+            Already have an account? <a href="/login">Login</a>
+        </div>
+
+        <% if (msg) { %>
+        <script>alert("<%= msg %>")</script>
+        <% } %>
+    </form>
+
+    <script>
+        const togglePassword = (fieldId, icon) => {
+            const input = document.getElementById(fieldId);
+            input.type = input.type === "password" ? "text" : "password";
+            icon.classList.toggle("fa-eye");
+            icon.classList.toggle("fa-eye-slash");
+        };
+
+        const validateLicense = (input) => {
+            const msg = document.getElementById("licenseMsg");
+            const regex = /^[A-Z]{2}[0-9]{13}$/;
+            input.value = input.value.toUpperCase();
+            msg.style.display = regex.test(input.value) ? "none" : "block";
+        };
+    </script>
+</body>
+
+</html>

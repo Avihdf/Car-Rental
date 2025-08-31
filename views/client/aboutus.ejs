@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Driven</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bruno+Ace+SC&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Iceland&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nova+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Michroma&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Jura:wght@300..700&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Aldrich&family=Jura:wght@300..700&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            line-height: 1.6;
+              background: linear-gradient(135deg, #a0b8ec 0%, #e7a8a8 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .page-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding-top: 100px;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            width: 95%;
+            max-width: 1200px;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            text-align: center;
+            padding: 60px 20px;
+            color: black;
+        }
+
+        .hero-title {
+            font-size: clamp(40px, 8vw, 80px);
+            font-family: 'Bruno Ace SC', cursive;
+            font-weight: 400;
+            margin-bottom: 20px;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(18px, 3vw, 24px);
+            color: black;
+            margin-bottom: 40px;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        /* Main Content */
+        .content {
+            flex: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px 60px;
+            width: 100%;
+        }
+
+        .about-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 50px 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            margin-bottom: 40px;
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+
+        .about-intro {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .about-intro h2 {
+            font-size: clamp(28px, 5vw, 36px);
+            font-family: 'Jura', sans-serif;
+            color: #2d3748;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .about-intro p {
+            font-size: clamp(16px, 2.5vw, 20px);
+            color: #4a5568;
+            line-height: 1.8;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+        }
+
+        .feature-icon {
+            font-size: 48px;
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+
+        .feature-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 15px;
+            font-family: 'Jura', sans-serif;
+        }
+
+        .feature-description {
+            font-size: 16px;
+            color: #718096;
+            line-height: 1.6;
+        }
+
+        /* Mission Section */
+        .mission-section {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 50px 40px;
+            border-radius: 25px;
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .mission-title {
+            font-size: clamp(24px, 4vw, 32px);
+            font-family: 'Jura', sans-serif;
+            margin-bottom: 25px;
+            font-weight: 700;
+        }
+
+        .mission-text {
+            font-size: clamp(16px, 2.5vw, 18px);
+            line-height: 1.7;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .stat-number {
+            font-size: clamp(36px, 6vw, 48px);
+            font-weight: 700;
+            color: #667eea;
+            font-family: 'Jura', sans-serif;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 16px;
+            color: #718096;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        /* Team Section */
+        .team-section {
+            margin: 50px 0;
+        }
+
+        .team-title {
+            text-align: center;
+            font-size: clamp(28px, 5vw, 36px);
+            font-family: 'Jura', sans-serif;
+            color: #2d3748;
+            margin-bottom: 40px;
+            font-weight: 700;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .team-member {
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .team-member:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .member-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 32px;
+            color: white;
+        }
+
+        .member-name {
+            font-size: 20px;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 8px;
+            font-family: 'Jura', sans-serif;
+        }
+
+        .member-role {
+            font-size: 14px;
+            color: #667eea;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .member-description {
+            font-size: 14px;
+            color: #718096;
+            line-height: 1.5;
+        }
+
+        /* Call to Action */
+        .cta-section {
+            background: linear-gradient(135deg, #48bb78, #38a169);
+            color: white;
+            padding: 50px 40px;
+            border-radius: 25px;
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .cta-title {
+            font-size: clamp(24px, 4vw, 32px);
+            font-family: 'Jura', sans-serif;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .cta-text {
+            font-size: clamp(16px, 2.5vw, 18px);
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 30px;
+            background: white;
+            color: #48bb78;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background: #f7fafc;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: auto;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 768px) {
+            .page-container {
+                padding-top: 80px;
+            }
+
+            .hero-section {
+                padding: 40px 15px;
+            }
+
+            .about-card {
+                padding: 35px 25px;
+                border-radius: 20px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .feature-card {
+                padding: 25px 20px;
+            }
+
+            .mission-section {
+                padding: 35px 25px;
+            }
+
+            .cta-section {
+                padding: 35px 25px;
+            }
+
+            .stats-section {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .about-card {
+                padding: 25px 20px;
+            }
+
+            .feature-card {
+                padding: 20px 15px;
+            }
+
+            .mission-section,
+            .cta-section {
+                padding: 30px 20px;
+            }
+
+            .stats-section {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page-container">
+        <%- include('../partials/clientnavbar') %>
+
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <h1 class="hero-title">About Driven</h1>
+            <p class="hero-subtitle">Your trusted partner in premium car rentals</p>
+        </section>
+
+        <div class="content">
+            <!-- Main About Card -->
+            <div class="about-card">
+                <div class="about-intro">
+                    <h2>Welcome to Our Platform</h2>
+                    <p>
+                        We are committed to delivering top-notch vehicle rental and management solutions, 
+                        ensuring customer satisfaction, safety, and reliability. Our mission is to make 
+                        transportation easier and more accessible for everyone, while providing an 
+                        exceptional experience that exceeds expectations.
+                    </p>
+                </div>
+
+                <!-- Features Grid -->
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <i class="fas fa-shield-alt feature-icon"></i>
+                        <h3 class="feature-title">Safety First</h3>
+                        <p class="feature-description">
+                            All our vehicles undergo rigorous safety inspections and maintenance to ensure your peace of mind.
+                        </p>
+                    </div>
+
+                    <div class="feature-card">
+                        <i class="fas fa-clock feature-icon"></i>
+                        <h3 class="feature-title">24/7 Support</h3>
+                        <p class="feature-description">
+                            Our dedicated customer support team is available round the clock to assist you with any queries.
+                        </p>
+                    </div>
+
+                    <div class="feature-card">
+                        <i class="fas fa-star feature-icon"></i>
+                        <h3 class="feature-title">Premium Quality</h3>
+                        <p class="feature-description">
+                            We maintain a fleet of premium vehicles that are regularly serviced and kept in excellent condition.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Stats Section -->
+                <div class="stats-section">
+                    <div class="stat-item">
+                        <div class="stat-number">10K+</div>
+                        <div class="stat-label">Happy Customers</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">500+</div>
+                        <div class="stat-label">Premium Cars</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">50+</div>
+                        <div class="stat-label">Cities Covered</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">99%</div>
+                        <div class="stat-label">Satisfaction Rate</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mission Section -->
+            <div class="mission-section">
+                <h2 class="mission-title">Our Mission</h2>
+                <p class="mission-text">
+                    To revolutionize the car rental industry by providing seamless, reliable, and affordable 
+                    transportation solutions that empower people to explore, commute, and travel with confidence. 
+                    We believe that mobility should be accessible to everyone, everywhere.
+                </p>
+            </div>
+
+            <!-- Team Section -->
+            <div class="about-card">
+                <h2 class="team-title">Meet Our Team</h2>
+                <div class="team-grid">
+                    <div class="team-member">
+                        <div class="member-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <h3 class="member-name">Avinash</h3>
+                        <p class="member-role">CEO & Founder</p>
+                        <p class="member-description">
+                            Visionary leader with  passionate about innovation.
+                        </p>
+                    </div>
+
+                    <div class="team-member">
+                        <div class="member-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <h3 class="member-name">Rupam Kumar</h3>
+                        <p class="member-role">Head of Operations</p>
+                        <p class="member-description">
+                            Operations expert ensuring smooth service delivery and customer satisfaction across all locations.
+                        </p>
+                    </div>
+
+                    <div class="team-member">
+                        <div class="member-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <h3 class="member-name">Ragvan</h3>
+                        <p class="member-role">Technology Director</p>
+                        <p class="member-description">
+                            Tech innovator developing cutting-edge solutions to enhance the car rental experience.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Call to Action -->
+            <div class="cta-section">
+                <h2 class="cta-title">Ready to Hit the Road?</h2>
+                <p class="cta-text">
+                    Join thousands of satisfied customers who trust Driven for their transportation needs. 
+                    Start your journey with us today!
+                </p>
+                <a href="/cars" class="cta-button">
+                    <i class="fas fa-car"></i>
+                    Browse Our Fleet
+                </a>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <%- include('../partials/footer') %>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate elements on scroll
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all cards and sections
+            const animatedElements = document.querySelectorAll('.about-card, .mission-section, .cta-section, .feature-card, .team-member');
+            animatedElements.forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'all 0.6s ease';
+                observer.observe(el);
+            });
+
+            // Counter animation for stats
+            const counters = document.querySelectorAll('.stat-number');
+            const counterObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const counter = entry.target;
+                        const target = parseInt(counter.textContent.replace(/[^\d]/g, ''));
+                        let current = 0;
+                        const increment = target / 50;
+                        const timer = setInterval(() => {
+                            current += increment;
+                            if (current >= target) {
+                                counter.textContent = counter.textContent.replace(/\d+/, target);
+                                clearInterval(timer);
+                            } else {
+                                counter.textContent = counter.textContent.replace(/\d+/, Math.floor(current));
+                            }
+                        }, 30);
+                        counterObserver.unobserve(counter);
+                    }
+                });
+            });
+
+            counters.forEach(counter => {
+                counterObserver.observe(counter);
+            });
+        });
+    </script>
+</body>
+
+</html>

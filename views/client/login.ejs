@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Driven</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body,
+        html {
+            height: 100%;
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(135deg, #f0f4ff, #dfe9f3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .login-container {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1),
+                        0 5px 15px rgba(0, 0, 0, 0.05);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 45px 40px;
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+            position: relative;
+            animation: slideIn 0.6s ease-out;
+        }
+
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #4a90e2, #357bd8, #4a90e2);
+            border-radius: 20px 20px 0 0;
+            background-size: 200% 100%;
+            animation: shimmer 2s ease-in-out infinite;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes shimmer {
+            0%, 100% { background-position: 200% 0; }
+            50% { background-position: -200% 0; }
+        }
+
+        .login-header {
+            margin-bottom: 35px;
+        }
+
+        .login-header h1 {
+            font-size: clamp(24px, 5vw, 32px);
+            color: #2d3748;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .login-header p {
+            color: #718096;
+            font-size: 14px;
+            font-weight: 400;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .form-group i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #718096;
+            font-size: 16px;
+            z-index: 1;
+        }
+
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 15px 20px 15px 45px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.9);
+            font-size: 15px;
+            font-family: 'Quicksand', sans-serif;
+            color: #2d3748;
+            transition: all 0.3s ease;
+        }
+
+        input[type="email"]:focus,
+        input[type="password"]:focus {
+            outline: none;
+            border-color: #4a90e2;
+            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+            background: rgba(255, 255, 255, 1);
+        }
+
+        input[type="email"]:focus + i,
+        input[type="password"]:focus + i {
+            color: #4a90e2;
+        }
+
+        .forgot-password {
+            text-align: left;
+            margin-bottom: 25px;
+        }
+
+        .forgot-password a {
+            color: #4a90e2;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .forgot-password a:hover {
+            color: #357bd8;
+            text-decoration: underline;
+        }
+
+        .error-message {
+            background: rgba(229, 62, 62, 0.1);
+            border: 1px solid rgba(229, 62, 62, 0.3);
+            color: #c53030;
+            padding: 12px 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-bottom: 20px;
+            text-align: left;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #4a90e2, #357bd8);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 16px;
+            font-family: 'Quicksand', sans-serif;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 25px;
+        }
+
+        .login-button:hover {
+            background: linear-gradient(135deg, #357bd8, #2c5aa0);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(74, 144, 226, 0.3);
+        }
+
+        .login-button:active {
+            transform: translateY(0);
+        }
+
+        .signup-link {
+            color: #718096;
+            font-size: 14px;
+        }
+
+        .signup-link a {
+            color: #4a90e2;
+            text-decoration: none;
+            font-weight: 600;
+            margin-left: 5px;
+            transition: color 0.3s ease;
+        }
+
+        .signup-link a:hover {
+            color: #357bd8;
+            text-decoration: underline;
+        }
+
+        /* Loading state */
+        .login-button.loading {
+            position: relative;
+            color: transparent;
+        }
+
+        .login-button.loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            margin: -10px 0 0 -10px;
+            border: 2px solid transparent;
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 768px) {
+            body {
+                padding: 20px;
+            }
+
+            .login-container {
+                width: 100%;
+                max-width: 380px;
+                padding: 35px 30px;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            body {
+                padding: 15px;
+                align-items: flex-start;
+                padding-top: 10vh;
+            }
+
+            .login-container {
+                width: 100%;
+                max-width: none;
+                padding: 30px 25px;
+                border-radius: 15px;
+            }
+
+            input[type="email"],
+            input[type="password"] {
+                padding: 16px 20px 16px 45px;
+                font-size: 16px;
+            }
+
+            .login-button {
+                padding: 16px;
+                font-size: 16px;
+            }
+
+            .login-header h1 {
+                font-size: 28px;
+            }
+
+            .forgot-password {
+                text-align: center;
+            }
+
+            .forgot-password a {
+                font-size: 14px;
+            }
+        }
+
+        @media screen and (max-width: 320px) {
+            .login-container {
+                padding: 25px 20px;
+            }
+
+            input[type="email"],
+            input[type="password"] {
+                padding: 14px 18px 14px 40px;
+            }
+
+            .form-group i {
+                left: 12px;
+            }
+        }
+
+        /* Accessibility improvements */
+        input[type="email"]:focus,
+        input[type="password"]:focus,
+        .login-button:focus {
+            outline: 2px solid #4a90e2;
+            outline-offset: 2px;
+        }
+
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            .login-container {
+                background: rgba(255, 255, 255, 0.95);
+                border: 2px solid #000;
+            }
+
+            input[type="email"],
+            input[type="password"] {
+                border: 2px solid #000;
+                background: white;
+            }
+        }
+
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            .login-container,
+            .error-message {
+                animation: none;
+            }
+
+            .login-container::before {
+                animation: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <h1>Welcome Back</h1>
+            <p>Please sign in to your account</p>
+        </div>
+
+        <form action="/login" method="post" id="loginForm">
+            <div class="form-group">
+                <input type="email" placeholder="Email or User ID" name="email" required id="email">
+                <i class="fas fa-envelope"></i>
+            </div>
+
+            <div class="form-group">
+                <input type="password" placeholder="Password" name="password" required id="password">
+                <i class="fas fa-lock"></i>
+            </div>
+
+            <div class="forgot-password">
+                <a href="/forget_password">Forgot Password?</a>
+            </div>
+
+            <% if (typeof msg !== 'undefined' && msg) { %>
+                <div class="error-message">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <%= msg %>
+                </div>
+            <% } %>
+
+            <button type="submit" class="login-button" id="loginBtn">
+                <i class="fas fa-sign-in-alt"></i>
+                Sign In
+            </button>
+
+            <div class="signup-link">
+                Don't have an account?
+                <a href="/register">Create Now</a>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('loginForm');
+            const loginBtn = document.getElementById('loginBtn');
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+
+            // Form submission with loading state
+            form.addEventListener('submit', function() {
+                loginBtn.classList.add('loading');
+                loginBtn.disabled = true;
+            });
+
+            // Input validation feedback
+            function validateEmail(email) {
+                const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return re.test(email);
+            }
+
+            emailInput.addEventListener('blur', function() {
+                if (this.value && !validateEmail(this.value)) {
+                    this.style.borderColor = '#e53e3e';
+                } else if (this.value) {
+                    this.style.borderColor = '#48bb78';
+                }
+            });
+
+            passwordInput.addEventListener('input', function() {
+                if (this.value.length > 0) {
+                    if (this.value.length < 6) {
+                        this.style.borderColor = '#ed8936';
+                    } else {
+                        this.style.borderColor = '#48bb78';
+                    }
+                }
+            });
+
+            // Clear validation styles on focus
+            [emailInput, passwordInput].forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.style.borderColor = '#4a90e2';
+                });
+            });
+
+            // Auto-focus first empty field
+            if (!emailInput.value) {
+                emailInput.focus();
+            } else if (!passwordInput.value) {
+                passwordInput.focus();
+            }
+
+            // Enter key navigation
+            emailInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    passwordInput.focus();
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
