@@ -18,6 +18,7 @@ exports.updatepassword=async(req,res)=>{
         const id=req.params.id
         const userdetail=await user.findById(id)
         const {oldpassword,newpassword,conformpassword}=req.body
+       
         
 
         const match=await bcrypt.compare(oldpassword,userdetail.password)

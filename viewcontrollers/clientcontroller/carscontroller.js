@@ -14,6 +14,7 @@ exports.showcars=async(req,res)=>{
             
             res.render('cars', { user: userData,vehicle:vehicles});
         } catch (err) {
-            res.render('cars', { user: null });
+            const vehicles=await vehicle.find();
+            res.render('cars', {user:[],vehicle:vehicles});
         }
 }

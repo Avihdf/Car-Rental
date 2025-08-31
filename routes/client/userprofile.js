@@ -10,7 +10,8 @@ router.get('/userprofile/:id', jwtMiddleware, userprofile.showuserprofile)
 router.post('/userprofile/:id',jwtMiddleware,userprofile.updateuser)
 
 router.get('/updatepassword/:id',jwtMiddleware,userpassword.showuserupadtepassword)
-router.post('/updatepasword/:id',jwtMiddleware,userpassword.updatepassword)
+
+router.post('/updatepassword/:id',jwtMiddleware,userpassword.updatepassword)
 
 router.get('/bookings/:id',jwtMiddleware,booking.showmybooking)
 

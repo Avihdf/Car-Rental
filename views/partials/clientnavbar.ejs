@@ -1,24 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Navbar</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Navbar - Driven</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Bruno+Ace+SC&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Iceland&display=swap" rel="stylesheet">
 
     <style>
-        * { box-sizing: border-box; }
+        * {
+            box-sizing: border-box;
+        }
 
         body {
             margin: 0;
             font-family: 'Iceland', sans-serif;
         }
 
-        /* Navbar container */
+        /* Desktop Navbar */
         .navbar {
             width: 96%;
+            height: 60px;
             background: rgba(8, 8, 8, 0.25);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
@@ -29,29 +33,26 @@
             padding: 12px 24px;
             margin: 10px auto;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            flex-wrap: wrap;
             border: 1px solid rgba(255, 255, 255, 0.3);
             transition: all 0.3s ease;
             z-index: 1000;
         }
 
-        /* Logo */
-        .logo {
+        .navbar .logo {
             font-family: "Bruno Ace SC", cursive;
             font-size: 32px;
             text-decoration: none;
             color: black;
         }
 
-        /* Links */
-        .nav-links {
+        .navbar .nav-links {
+            flex: 1;
             display: flex;
+            justify-content: center;
             gap: 20px;
-            align-items: center;
-            transition: max-height 0.3s ease;
         }
 
-        .nav-links a {
+        .navbar .nav-links a {
             text-decoration: none;
             font-size: 20px;
             color: black;
@@ -60,20 +61,19 @@
             transition: all 0.3s ease;
         }
 
-        .nav-links a:hover {
+        .navbar .nav-links a:hover {
             background: rgba(0, 0, 0, 0.1);
             box-shadow: 0px 0px 10px black;
             transform: scale(1.05);
         }
 
-        /* Auth Section */
-        .auth {
+        .navbar .auth {
             display: flex;
-            gap: 10px;
             align-items: center;
+            gap: 10px;
         }
 
-        .auth a {
+        .navbar .auth a {
             font-size: 22px;
             color: black;
             text-decoration: none;
@@ -82,19 +82,17 @@
             transition: all 0.3s ease;
         }
 
-        .auth a:hover {
+        .navbar .auth a:hover {
             background: rgba(0, 0, 0, 0.1);
             box-shadow: 0px 0px 10px black;
             transform: scale(1.05);
         }
 
-        /* Dropdown styles */
-        .dropdown {
+        .navbar .dropdown {
             position: relative;
-            display: inline-block;
         }
 
-        .dropbtn {
+        .navbar .dropbtn {
             font-size: 22px;
             color: black;
             padding: 4px 10px;
@@ -103,76 +101,258 @@
             background: none;
             cursor: pointer;
             font-family: 'Iceland', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
         }
 
-        .dropbtn:hover {
+        .navbar .dropbtn:hover {
             background: rgba(0, 0, 0, 0.1);
             box-shadow: 0px 0px 10px black;
             transform: scale(1.05);
         }
 
-        .dropdown-content {
+        .navbar .dropdown-content {
             display: none;
             position: absolute;
             top: 45px;
             right: 0;
-            background-color: #f1f1f1;
-            min-width: 180px;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            min-width: 200px;
             box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-            z-index: 1;
-            border-radius: 5px;
+            z-index: 1001;
+            border-radius: 10px;
+            overflow: hidden;
         }
 
-        .dropdown-content a {
-            font-size: 15px;
+        .navbar .dropdown-content a {
+            font-size: 16px;
             color: black;
-            padding: 10px 16px;
+            padding: 12px 16px;
             text-decoration: none;
             display: block;
+            transition: background 0.3s ease;
         }
 
-        .dropdown-content.show {
+        .navbar .dropdown-content a:hover {
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar .dropdown-content.show {
             display: block;
+            animation: fadeIn 0.3s ease;
         }
 
-        /* Hamburger Icon */
-        .menu-toggle {
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .navbar .menu-toggle {
             display: none;
             font-size: 28px;
             cursor: pointer;
+            color: black;
         }
 
-        /* Responsive Styling */
-        @media screen and (max-width: 768px) {
-            .nav-links,
-            .auth {
-                display: none;
-                flex-direction: column;
-                width: 100%;
-                margin-top: 10px;
-                text-align: center;
-            }
+        /* Mobile Navbar */
+        .mobilenavbar {
+            display: none;
+            width: 100%;
+            background: rgba(8, 8, 8, 0.9);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 9999;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            flex-direction: column;
+        }
 
-            .navbar.responsive .nav-links,
-            .navbar.responsive .auth {
+        .mobilenavbar .navbar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .mobilenavbar .logo {
+            font-family: "Bruno Ace SC", cursive;
+            font-size: 28px;
+            text-decoration: none;
+            color: white;
+        }
+
+        .mobilenavbar .menu-toggle {
+            font-size: 28px;
+            cursor: pointer;
+            color: white;
+            transition: transform 0.3s ease;
+        }
+
+        .mobilenavbar .menu-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        .mobilenavbar .mobile-menu {
+            display: none;
+            padding: 20px;
+            animation: slideDown 0.3s ease;
+        }
+
+        .mobilenavbar .mobile-menu.show {
+            display: block;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .mobilenavbar .mobile-nav-links {
+            margin-bottom: 30px;
+        }
+
+        .mobilenavbar .mobile-nav-links a {
+            display: block;
+            color: white;
+            font-size: 22px;
+            padding: 15px 0;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .mobilenavbar .mobile-nav-links a:hover {
+            color: #ffd700;
+            padding-left: 15px;
+        }
+
+        .mobilenavbar .mobile-nav-links a:last-child {
+            border-bottom: none;
+        }
+
+        .mobilenavbar .mobile-auth {
+            border-top: 2px solid rgba(255, 255, 255, 0.3);
+            padding-top: 20px;
+        }
+
+        .mobilenavbar .mobile-user-info {
+            color: white;
+            font-size: 20px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .mobilenavbar .mobile-user-links a {
+            display: block;
+            color: white;
+            font-size: 18px;
+            padding: 12px 15px;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            margin-bottom: 5px;
+        }
+
+        .mobilenavbar .mobile-user-links a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffd700;
+            padding-left: 25px;
+        }
+
+        .mobilenavbar .mobile-login {
+            text-align: center;
+        }
+
+        .mobilenavbar .mobile-login a {
+            display: inline-block;
+            color: white;
+            font-size: 22px;
+            padding: 15px 30px;
+            text-decoration: none;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .mobilenavbar .mobile-login a:hover {
+            background: linear-gradient(135deg, #5a67d8, #667eea);
+            transform: scale(1.05);
+        }
+
+        /* Responsive Logic */
+        @media screen and (min-width: 769px) {
+            .navbar {
                 display: flex;
             }
+            
+            .mobilenavbar {
+                display: none !important;
+            }
+        }
 
+        @media screen and (max-width: 768px) {
             .navbar {
-                flex-direction: column;
-                align-items: flex-start;
+                display: none;
+            }
+            
+            .mobilenavbar {
+                display: flex;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .mobilenavbar .logo {
+                font-size: 24px;
             }
 
-            .menu-toggle {
-                display: block;
+            .mobilenavbar .menu-toggle {
+                font-size: 24px;
+            }
+
+            .mobilenavbar .mobile-menu {
+                padding: 15px;
+            }
+
+            .mobilenavbar .mobile-nav-links a {
+                font-size: 20px;
+                padding: 12px 0;
+            }
+
+            .mobilenavbar .mobile-user-info {
+                font-size: 18px;
+                padding: 12px;
+            }
+
+            .mobilenavbar .mobile-user-links a {
+                font-size: 16px;
+                padding: 10px 12px;
             }
         }
     </style>
 </head>
+
 <body>
+    <!-- Desktop Navbar -->
     <div class="navbar" id="navbar">
         <a href="/" class="logo">Driven</a>
-        <i class="fa-solid fa-bars menu-toggle" onclick="toggleMenu()"></i>
 
         <div class="nav-links">
             <a href="/">Home</a>
@@ -184,10 +364,11 @@
         <div class="auth">
             <% if (typeof user !== 'undefined' && user) { %>
                 <div class="dropdown">
-                    <button class="dropbtn" onclick="toggleDropdown()">
-                        <i class="fa-solid fa-circle-user"></i> <%= user.name %>
+                    <button class="dropbtn" onclick="toggleDropdown('desktop')">
+                        <i class="fa-solid fa-circle-user"></i>
+                        <%= user.name %>
                     </button>
-                    <div class="dropdown-content" id="userDropdown">
+                    <div class="dropdown-content" id="desktopDropdown">
                         <a href="/userprofile/<%=user._id%>"><i class="fa-solid fa-user-pen"></i> Update Profile</a>
                         <a href="/updatepassword/<%=user._id%>"><i class="fa-solid fa-key"></i> Update Password</a>
                         <a href="/bookings/<%=user._id%>"><i class="fa-solid fa-clipboard-list"></i> Your Bookings</a>
@@ -200,25 +381,122 @@
         </div>
     </div>
 
+    <!-- Mobile Navbar -->
+    <div class="mobilenavbar" id="mobilenavbar">
+        <div class="navbar-header">
+            <a href="/" class="logo">Driven</a>
+            <i class="fa-solid fa-bars menu-toggle" onclick="toggleMobileMenu()" id="mobileMenuToggle"></i>
+        </div>
+
+        <div class="mobile-menu" id="mobileMenu">
+            <div class="mobile-nav-links">
+                <a href="/">Home</a>
+                <a href="/cars">Cars</a>
+                <a href="/aboutus">About Us</a>
+                <a href="/contact">Contact</a>
+            </div>
+
+            <div class="mobile-auth">
+                <% if (typeof user !== 'undefined' && user) { %>
+                    <div class="mobile-user-info">
+                        <i class="fa-solid fa-circle-user"></i>
+                        <span><%= user.name %></span>
+                    </div>
+                    <div class="mobile-user-links">
+                        <a href="/userprofile/<%=user._id%>">
+                            <i class="fa-solid fa-user-pen"></i> Update Profile
+                        </a>
+                        <a href="/updatepassword/<%=user._id%>">
+                            <i class="fa-solid fa-key"></i> Update Password
+                        </a>
+                        <a href="/bookings/<%=user._id%>">
+                            <i class="fa-solid fa-clipboard-list"></i> Your Bookings
+                        </a>
+                        <a href="/logout">
+                            <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+                        </a>
+                    </div>
+                <% } else { %>
+                    <div class="mobile-login">
+                        <a href="/login">
+                            <i class="fa-solid fa-circle-user"></i> Login
+                        </a>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+
     <script>
-        const toggleMenu = () => {
-            const navbar = document.getElementById('navbar');
-            navbar.classList.toggle('responsive');
-        }
+        let mobileMenuOpen = false;
 
-        const toggleDropdown = () => {
-            document.getElementById("userDropdown").classList.toggle("show");
-        }
-
-        // Close dropdown if clicked outside
-        window.onclick = function(event) {
-            if (!event.target.matches('.dropbtn')) {
-                const dropdowns = document.getElementsByClassName("dropdown-content");
-                for (let i = 0; i < dropdowns.length; i++) {
-                    dropdowns[i].classList.remove('show');
-                }
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            const menuToggle = document.getElementById('mobileMenuToggle');
+            
+            mobileMenuOpen = !mobileMenuOpen;
+            
+            if (mobileMenuOpen) {
+                mobileMenu.classList.add('show');
+                menuToggle.classList.remove('fa-bars');
+                menuToggle.classList.add('fa-times');
+            } else {
+                mobileMenu.classList.remove('show');
+                menuToggle.classList.remove('fa-times');
+                menuToggle.classList.add('fa-bars');
             }
         }
+
+        function toggleDropdown(type) {
+            const dropdownId = type === 'desktop' ? 'desktopDropdown' : 'mobileDropdown';
+            const dropdown = document.getElementById(dropdownId);
+            dropdown.classList.toggle('show');
+        }
+
+        // Close mobile menu when clicking on links
+        document.addEventListener('click', function(event) {
+            const mobileMenu = document.getElementById('mobileMenu');
+            const menuToggle = document.getElementById('mobileMenuToggle');
+            const mobileNavbar = document.getElementById('mobilenavbar');
+            
+            // Close mobile menu if clicking on mobile nav links
+            if (event.target.closest('.mobile-nav-links a') || event.target.closest('.mobile-user-links a')) {
+                mobileMenu.classList.remove('show');
+                menuToggle.classList.remove('fa-times');
+                menuToggle.classList.add('fa-bars');
+                mobileMenuOpen = false;
+            }
+            
+            // Close dropdown if clicking outside
+            if (!event.target.closest('.dropdown')) {
+                const dropdown = document.getElementById("desktopDropdown");
+                if (dropdown) {
+                    dropdown.classList.remove('show');
+                }
+            }
+            
+            // Close mobile menu if clicking outside
+            if (!mobileNavbar.contains(event.target) && mobileMenuOpen) {
+                mobileMenu.classList.remove('show');
+                menuToggle.classList.remove('fa-times');
+                menuToggle.classList.add('fa-bars');
+                mobileMenuOpen = false;
+            }
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768 && mobileMenuOpen) {
+                const mobileMenu = document.getElementById('mobileMenu');
+                const menuToggle = document.getElementById('mobileMenuToggle');
+                
+                mobileMenu.classList.remove('show');
+                menuToggle.classList.remove('fa-times');
+                menuToggle.classList.add('fa-bars');
+                mobileMenuOpen = false;
+            }
+        });
     </script>
 </body>
+
 </html>

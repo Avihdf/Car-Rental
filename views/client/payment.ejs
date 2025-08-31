@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Options - Driven</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .payment-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 40px 35px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            max-width: 500px;
+            width: 100%;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .payment-header {
+            text-align: center;
+            margin-bottom: 35px;
+            padding-bottom: 25px;
+            border-bottom: 2px solid rgba(102, 126, 234, 0.1);
+        }
+
+        .payment-title {
+            font-size: clamp(24px, 4vw, 32px);
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .payment-subtitle {
+            color: #718096;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        /* Booking Summary */
+        .booking-summary {
+            background: rgba(102, 126, 234, 0.05);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-left: 4px solid #667eea;
+        }
+
+        .booking-summary h3 {
+            color: #2d3748;
+            margin-bottom: 15px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            color: #4a5568;
+        }
+
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 700;
+            font-size: 18px;
+            color: #667eea;
+            border-top: 1px solid rgba(102, 126, 234, 0.2);
+            padding-top: 10px;
+            margin-top: 15px;
+        }
+
+        /* Payment Form */
+        .payment-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .payment-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .payment-option {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 20px;
+            border: 2px solid rgba(102, 126, 234, 0.3);
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .payment-option:hover {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.05);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
+        }
+
+        .payment-option.selected {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .payment-option input[type="radio"] {
+            width: 20px;
+            height: 20px;
+            accent-color: #667eea;
+            cursor: pointer;
+        }
+
+        .payment-icon {
+            font-size: 28px;
+            color: #667eea;
+            width: 40px;
+            text-align: center;
+        }
+
+        .payment-details {
+            flex: 1;
+        }
+
+        .payment-details h4 {
+            margin: 0 0 5px 0;
+            font-size: 18px;
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .payment-details p {
+            margin: 0;
+            color: #718096;
+            font-size: 14px;
+        }
+
+        .payment-benefit {
+            background: rgba(72, 187, 120, 0.1);
+            color: #2f855a;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: auto;
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 16px 24px;
+            border-radius: 15px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .submit-btn:hover {
+            background: linear-gradient(135deg, #5a67d8, #667eea);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .submit-btn:disabled {
+            background: #cbd5e0;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Loading state */
+        .submit-btn.loading {
+            position: relative;
+            color: transparent;
+        }
+
+        .submit-btn.loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            margin: -10px 0 0 -10px;
+            border: 2px solid transparent;
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Back Button */
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            color: #5a67d8;
+            transform: translateX(-5px);
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 768px) {
+            .payment-container {
+                padding: 30px 25px;
+                margin: 10px;
+            }
+
+            .payment-option {
+                padding: 15px;
+            }
+
+            .payment-icon {
+                font-size: 24px;
+                width: 35px;
+            }
+
+            .payment-details h4 {
+                font-size: 16px;
+            }
+
+            .payment-details p {
+                font-size: 13px;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .payment-container {
+                padding: 25px 20px;
+            }
+
+            .payment-option {
+                padding: 12px;
+                gap: 12px;
+            }
+
+            .submit-btn {
+                padding: 14px 20px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="payment-container">
+        <!-- Back Button -->
+        <a href="/booking" class="back-btn">
+            <i class="fas fa-arrow-left"></i>
+            Back to Booking
+        </a>
+
+        <!-- Payment Header -->
+        <div class="payment-header">
+            <h1 class="payment-title">
+                <i class="fas fa-credit-card"></i>
+                Choose Payment Method
+            </h1>
+            <p class="payment-subtitle">Select your preferred payment option to complete the booking</p>
+        </div>
+
+        <!-- Booking Summary -->
+        <% if (typeof booking !== 'undefined' && booking) { %>
+            <div class="booking-summary">
+                <h3><i class="fas fa-receipt"></i> Booking Summary</h3>
+                <div class="summary-item">
+                    <span>Car:</span>
+                    <span><%= booking.carName || 'Selected Vehicle' %></span>
+                </div>
+                <div class="summary-item">
+                    <span>Duration:</span>
+                    <span><%= booking.duration || '1 day' %></span>
+                </div>
+                <div class="summary-item">
+                    <span>Pickup Date:</span>
+                    <span><%= booking.pickupDate || 'Today' %></span>
+                </div>
+                <div class="summary-item">
+                    <span>Location:</span>
+                    <span><%= booking.location || 'Default Location' %></span>
+                </div>
+                <div class="summary-total">
+                    <span>Total Amount:</span>
+                    <span>₹<%= booking.amount || '0' %></span>
+                </div>
+            </div>
+        <% } %>
+
+        <!-- Payment Form -->
+        <form class="payment-form" action="/processPayment" method="POST" id="paymentForm">
+            <!-- Hidden fields for booking data -->
+            <% if (typeof booking !== 'undefined' && booking) { %>
+                <input type="hidden" name="bookingId" value="<%= booking.id %>">
+                <input type="hidden" name="amount" value="<%= booking.amount %>">
+            <% } %>
+
+            <div class="payment-methods">
+                <!-- Cash on Delivery Option -->
+                <label class="payment-option" for="cod">
+                    <input type="radio" name="paymentMethod" value="COD" id="cod" required>
+                    <i class="fas fa-truck payment-icon"></i>
+                    <div class="payment-details">
+                        <h4>Cash on Delivery (COD)</h4>
+                        <p>Pay when you receive the vehicle at pickup location</p>
+                    </div>
+                    <span class="payment-benefit">No Extra Charges</span>
+                </label>
+
+                <!-- Online Payment Option -->
+                <label class="payment-option" for="online">
+                    <input type="radio" name="paymentMethod" value="Online" id="online">
+                    <i class="fas fa-credit-card payment-icon"></i>
+                    <div class="payment-details">
+                        <h4>Online Payment</h4>
+                        <p>Pay securely using UPI, Credit/Debit Cards, Net Banking</p>
+                    </div>
+                    <span class="payment-benefit">Instant Confirmation</span>
+                </label>
+
+                <!-- UPI Payment Option (Optional) -->
+                <label class="payment-option" for="upi">
+                    <input type="radio" name="paymentMethod" value="UPI" id="upi">
+                    <i class="fab fa-google-pay payment-icon"></i>
+                    <div class="payment-details">
+                        <h4>UPI Payment</h4>
+                        <p>Pay using Google Pay, PhonePe, Paytm, or any UPI app</p>
+                    </div>
+                    <span class="payment-benefit">Quick & Easy</span>
+                </label>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="submit-btn" id="submitBtn">
+                <i class="fas fa-lock"></i>
+                Proceed to Pay
+            </button>
+        </form>
+
+        <!-- Error/Success Messages -->
+        <% if (typeof message !== 'undefined' && message) { %>
+            <div id="alertMessage" class="alert-message">
+                <%= message %>
+            </div>
+        <% } %>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('paymentForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const paymentOptions = document.querySelectorAll('.payment-option');
+            const radioInputs = document.querySelectorAll('input[type="radio"]');
+
+            // Add click handlers to payment options
+            paymentOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Remove selected class from all options
+                    paymentOptions.forEach(opt => opt.classList.remove('selected'));
+                    // Add selected class to clicked option
+                    this.classList.add('selected');
+                    
+                    // Check the radio button
+                    const radio = this.querySelector('input[type="radio"]');
+                    radio.checked = true;
+                    
+                    // Update submit button text based on selection
+                    updateSubmitButton(radio.value);
+                });
+            });
+
+            // Handle radio button changes
+            radioInputs.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    updateSubmitButton(this.value);
+                });
+            });
+
+            function updateSubmitButton(paymentMethod) {
+                const icon = submitBtn.querySelector('i');
+                const buttonText = submitBtn.childNodes[2];
+                
+                switch(paymentMethod) {
+                    case 'COD':
+                        icon.className = 'fas fa-truck';
+                        submitBtn.innerHTML = '<i class="fas fa-truck"></i> Confirm COD Booking';
+                        break;
+                    case 'Online':
+                        icon.className = 'fas fa-credit-card';
+                        submitBtn.innerHTML = '<i class="fas fa-credit-card"></i> Pay Online Now';
+                        break;
+                    case 'UPI':
+                        icon.className = 'fab fa-google-pay';
+                        submitBtn.innerHTML = '<i class="fab fa-google-pay"></i> Pay with UPI';
+                        break;
+                    default:
+                        icon.className = 'fas fa-lock';
+                        submitBtn.innerHTML = '<i class="fas fa-lock"></i> Proceed to Pay';
+                }
+            }
+
+            // Form submission with loading state
+            form.addEventListener('submit', function(e) {
+                const selectedPayment = document.querySelector('input[name="paymentMethod"]:checked');
+                
+                if (!selectedPayment) {
+                    e.preventDefault();
+                    alert('Please select a payment method');
+                    return;
+                }
+
+                // Add loading state
+                submitBtn.classList.add('loading');
+                submitBtn.disabled = true;
+
+                // For demonstration - remove in production
+                console.log('Payment Method Selected:', selectedPayment.value);
+            });
+
+            // Auto-hide alert messages
+            const alertMessage = document.getElementById('alertMessage');
+            if (alertMessage) {
+                setTimeout(() => {
+                    alertMessage.style.opacity = '0';
+                    setTimeout(() => {
+                        alertMessage.remove();
+                    }, 300);
+                }, 5000);
+            }
+        });
+    </script>
+</body>
+
+</html>
