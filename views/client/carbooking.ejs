@@ -495,7 +495,7 @@
                 <!-- Image Gallery -->
                 <div class="image-gallery">
                     <% if (car.images && car.images.length > 0) { %>
-                        <img src="/uploads/<%= car.images[0] %>" alt="<%= car.brand %> <%= car.name %>" class="main-image">
+                        <img src="<%= v.images[0] %>" alt="<%= car.brand %> <%= car.name %>" class="main-image">
                     <% } else { %>
                         <img src="/no-image.png" alt="No Image Available" class="main-image">
                     <% } %>

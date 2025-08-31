@@ -575,7 +575,7 @@
                         <div class="card-container" style=`animation-delay: <%= i * 0.1 %>s;`>
                             <div class="vehicle-image">
                                 <% if (v.images && v.images.length > 0) { %>
-                                    <img src="/uploads/<%= v.images[0] %>" alt="<%= v.brand %> <%= v.name %>">
+                                    <img src="<%= v.images[0] %>" alt="<%= v.brand %> <%= v.name %>">
                                 <% } else { %>
                                     <img src="/no-image.png" alt="No Image Available">
                                 <% } %>

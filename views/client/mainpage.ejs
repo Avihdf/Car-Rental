@@ -234,6 +234,7 @@
             max-width: 600px;
             margin-left: auto;
             margin-right: auto;
+            
         }
 
         .vehicle {
@@ -243,6 +244,7 @@
             justify-content: center;
             justify-items: center;
             padding: 20px 0;
+            
         }
 
         .card {
@@ -613,7 +615,7 @@
                                         <%= v.available %>
                                     </span>
                                     <% if (v.images && v.images.length > 0) { %>
-                                        <img src="/uploads/<%= v.images[0] %>" alt="<%= v.brand %> <%= v.name %>">
+                                        <img src="<%= v.images[0] %>" alt="<%= v.brand %> <%= v.name %>">
                                     <% } else { %>
                                         <img src="/no-image.png" alt="No Image Available">
                                     <% } %>

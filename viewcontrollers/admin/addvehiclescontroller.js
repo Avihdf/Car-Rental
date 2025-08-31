@@ -1,6 +1,6 @@
 const admin = require('../../models/user');
 const vehicle = require('../../models/allvehicle');
-const displayvehicle=require('../../models/displayvehicle')
+const displayvehicle = require('../../models/displayvehicle')
 
 exports.showaddvehicles = async (req, res) => {
     const adminData = await admin.findById(req.adminId);
@@ -25,11 +25,16 @@ exports.addvehiclesdetails = async (req, res) => {
             seating,
             location
         } = req.body;
+        // console.log('Form Data:', req.body);
+        // console.log('Uploaded Files:', req.files);
 
 
-        const date=new Date();
+
+        const date = new Date();
         const accessories = req.body.access || [];
-        const imageFiles = req.files.map(file => file.filename);
+
+        // Cloudinary URLs instead of local file names
+        const imageUrls = req.files.map(file => file.path);
 
         const exist = await vehicle.findOne({ vehiclenumber });
         if (exist) {
@@ -38,6 +43,8 @@ exports.addvehiclesdetails = async (req, res) => {
                 msg: 'Vehicle Already Exists'
             });
         }
+
+
 
         const displayvehicles = new displayvehicle({
             name,
@@ -50,9 +57,8 @@ exports.addvehiclesdetails = async (req, res) => {
             price,
             seating,
             accessories,
-            images: imageFiles
+            images: imageUrls
         });
-
         await displayvehicles.save();
 
         const addvehicle = new vehicle({
@@ -68,16 +74,17 @@ exports.addvehiclesdetails = async (req, res) => {
             location,
             date,
             accessories,
-            images: imageFiles,
+            images: imageUrls,
         });
-
         await addvehicle.save();
 
         return res.render('addvehicles', { admin: adminData, msg: 'Vehicle Added Successfully' });
     } catch (err) {
+        console.error(err)
         return res.render('addvehicles', {
             admin: adminData,
             msg: 'Error Occurred: ' + err.message
         });
     }
 };
+
