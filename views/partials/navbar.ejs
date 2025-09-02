@@ -109,6 +109,24 @@
             transform: translateY(-1px);
         }
 
+        /* ---------- HAMBURGER ---------- */
+        .hamburger {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            background: transparent;
+            border: none;
+            color: white;
+        }
+
+        .hamburger:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffc107;
+        }
+
         /* ---------- SIDE NAVBAR ---------- */
         .sidenavbar {
             position: fixed;
@@ -221,26 +239,10 @@
                 opacity: 0;
                 transform: translateY(-10px);
             }
-
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
-        }
-
-        /* ---------- HAMBURGER ---------- */
-        .hamburger {
-            display: none;
-            font-size: 24px;
-            cursor: pointer;
-            padding: 8px;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-        }
-
-        .hamburger:hover {
-            background: rgba(255, 255, 255, 0.1);
-            color: #ffc107;
         }
 
         /* Main Content Area */
@@ -252,12 +254,11 @@
             transition: margin-left 0.3s ease;
         }
 
-        /* ---------- RESPONSIVE DESIGN ---------- */
+        /* ---------- IMPROVED RESPONSIVE DESIGN ---------- */
         @media (max-width: 1200px) {
             .sidenavbar {
                 width: 260px;
             }
-
             .main-content {
                 margin-left: 260px;
             }
@@ -269,22 +270,18 @@
                 transform: translateX(-100%);
                 z-index: 1000;
             }
-
             .sidenavbar.active {
                 transform: translateX(0);
             }
-
             .hamburger {
                 display: flex;
                 align-items: center;
                 justify-content: center;
             }
-
             .main-content {
                 margin-left: 0;
                 padding: 20px;
             }
-
             body.active-overlay::before {
                 content: "";
                 position: fixed;
@@ -296,73 +293,91 @@
                 z-index: 999;
                 animation: fadeIn 0.3s ease;
             }
-
             @keyframes fadeIn {
-                from {
-                    opacity: 0;
-                }
-
-                to {
-                    opacity: 1;
-                }
-            }
-
-            .profile {
-                gap: 8px;
-            }
-
-            #profile {
-                font-size: 14px;
-                padding: 6px 12px;
-            }
-
-            #logout {
-                font-size: 13px;
-                padding: 6px 12px;
+                from { opacity: 0; }
+                to { opacity: 1; }
             }
         }
 
-        @media (max-width: 768px) {
+        /* ===== CRITICAL FIX: 550px to 750px Screen Width ===== */
+        @media (max-width: 750px) {
             .topnavbar {
+                justify-content: space-between;
                 padding: 0 15px;
+                flex-wrap: nowrap;
+            }
+
+            .hamburger {
+                display: flex !important;
+                align-items: center;
+                justify-content: center;
+                position: relative;
+                order: -1;
+                margin-right: 10px;
+                font-size: 22px;
+                padding: 6px 8px;
+            }
+
+            .brand-section {
+                order: 0;
+                flex: 1;
+                justify-content: center;
+                gap: 5px;
+            }
+
+            .brand-logo {
+                font-size: clamp(16px, 4vw, 20px);
             }
 
             .profile {
-                gap: 6px;
+                order: 1;
+                gap: 8px;
+                flex-shrink: 0;
             }
 
             #profile {
                 font-size: 13px;
                 padding: 6px 10px;
-                gap: 6px;
             }
 
             #logout {
                 font-size: 12px;
                 padding: 6px 10px;
-                gap: 4px;
-            }
-
-            .brand-logo {
-                font-size: 18px;
-            }
-
-            .main-content {
-                padding: 15px;
             }
 
             .sidenavbar {
-                width: 260px;
+                position: fixed;
+                left: -280px;
+                top: 60px;
+                width: 280px;
+                height: calc(100vh - 60px);
+                transition: left 0.3s ease;
+                z-index: 1000;
+            }
+
+            .sidenavbar.active {
+                left: 0;
+                transform: none;
+            }
+
+            .main-content {
+                margin-left: 0 !important;
+                padding: 15px !important;
             }
         }
 
-        @media (max-width: 480px) {
+        @media (max-width: 600px) {
             .topnavbar {
-                padding: 0 10px;
+                padding: 0 12px;
             }
 
-            .profile {
-                gap: 4px;
+            .hamburger {
+                font-size: 20px;
+                padding: 5px 6px;
+            }
+
+            .brand-logo {
+                font-size: clamp(14px, 4vw, 18px);
             }
 
             #profile {
@@ -375,20 +390,47 @@
                 padding: 5px 8px;
             }
 
-            .brand-logo {
-                font-size: 16px;
+            .sidenavbar {
+                width: 260px;
+                left: -260px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .topnavbar {
+                padding: 0 10px;
             }
 
             .hamburger {
-                font-size: 20px;
+                font-size: 18px;
+                padding: 4px 6px;
+            }
+
+            .profile {
+                gap: 4px;
+            }
+
+            #profile {
+                font-size: 11px;
+                padding: 4px 6px;
+            }
+
+            #logout {
+                font-size: 10px;
+                padding: 4px 6px;
+            }
+
+            .brand-logo {
+                font-size: 14px;
             }
 
             .main-content {
-                padding: 10px;
+                padding: 10px !important;
             }
 
             .sidenavbar {
                 width: 240px;
+                left: -240px;
                 padding: 20px 15px;
             }
 
@@ -399,20 +441,22 @@
             }
         }
 
-        @media (max-width: 320px) {
+        @media (max-width: 350px) {
             .profile {
-                flex-direction: column;
-                gap: 2px;
+                display: none;
             }
 
-            #profile,
-            #logout {
-                font-size: 10px;
-                padding: 4px 6px;
+            .brand-section {
+                justify-content: flex-start;
+            }
+
+            .hamburger {
+                margin-right: 15px;
             }
 
             .sidenavbar {
                 width: 220px;
+                left: -220px;
             }
         }
 
@@ -440,36 +484,33 @@
 <body>
     <!-- TOP NAVBAR -->
     <div class="topnavbar">
+        <span class="hamburger" id="hamburger">
+            <i class="fa-solid fa-bars"></i>
+        </span>
+        
         <div class="brand-section">
-            <span class="hamburger" id="hamburger">
-                <i class="fa-solid fa-bars"></i>
-            </span>
             <a href="/admin/dashboard" class="brand-logo">Driven Admin</a>
         </div>
 
-        <!-- In your navbar partial (partials/navbar.ejs) -->
         <div class="profile">
-            <% if (typeof admin !=='undefined' && admin && admin._id) { %>
+            <% if (typeof admin !== 'undefined' && admin && admin._id) { %>
                 <a href="/admin/profile/<%= admin._id %>" id="profile">
                     <i class="fa-solid fa-circle-user"></i>
-                    <span>
-                        <%= admin.name %>
-                    </span>
+                    <span><%= admin.name %></span>
                 </a>
-                <% } else { %>
-                    <a href="/admin/login" id="profile">
-                        <i class="fa-solid fa-circle-user"></i>
-                        <span>Login</span>
-                    </a>
-                    <% } %>
-                        <form action="/admin/logout" method="post" style="margin: 0;">
-                            <button id="logout" type="submit">
-                                <i class="fa-solid fa-power-off"></i>
-                                <span>Logout</span>
-                            </button>
-                        </form>
+            <% } else { %>
+                <a href="/admin/login" id="profile">
+                    <i class="fa-solid fa-circle-user"></i>
+                    <span>Login</span>
+                </a>
+            <% } %>
+            <form action="/admin/logout" method="post" style="margin: 0;">
+                <button id="logout" type="submit">
+                    <i class="fa-solid fa-power-off"></i>
+                    <span>Logout</span>
+                </button>
+            </form>
         </div>
-
     </div>
 
     <!-- SIDE NAVBAR -->
@@ -532,7 +573,6 @@
         const hamburger = document.getElementById('hamburger');
         const sidebar = document.getElementById('sidebar');
         const body = document.body;
-        const mainContent = document.getElementById('mainContent');
 
         // Toggle sidebar
         hamburger.addEventListener('click', (e) => {
@@ -544,14 +584,6 @@
         // Close sidebar when clicking outside
         body.addEventListener('click', (e) => {
             if (!sidebar.contains(e.target) && !hamburger.contains(e.target) && sidebar.classList.contains('active')) {
-                sidebar.classList.remove('active');
-                body.classList.remove('active-overlay');
-            }
-        });
-
-        // Close sidebar when clicking on overlay
-        body.addEventListener('click', (e) => {
-            if (e.target === body && body.classList.contains('active-overlay')) {
                 sidebar.classList.remove('active');
                 body.classList.remove('active-overlay');
             }

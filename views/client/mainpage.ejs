@@ -11,35 +11,43 @@
     <link href="https://fonts.googleapis.com/css2?family=Nova+Mono&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Michroma&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Jura:wght@300..700&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Aldrich&family=Jura:wght@300..700&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Jura:wght@300..700&family=Quicksand:wght@300..700&display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Aldrich&family=Jura:wght@300..700&family=Quicksand:wght@300..700&display=swap"
+        rel="stylesheet">
+
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            
         }
 
         html {
             scroll-behavior: smooth;
         }
 
+
         body {
             font-family: 'Quicksand', sans-serif;
             line-height: 1.6;
-            overflow-x: hidden;
-        }
+            background: linear-gradient(135deg, #a0b8ec 0%, #e7a8a8 100%);
+            min-height: 100vh;
+        } 
 
         .page-container {
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+           
         }
 
+        /* Fixed navbar positioning - THIS IS CRITICAL */
         .navbar {
             position: fixed;
-            top: 15px;
+            top: 10px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 1000;
@@ -47,26 +55,36 @@
             max-width: 1200px;
         }
 
+        /* Ensure content doesn't overlap with fixed navbar */
         .content {
             flex: 1;
-            padding-top: 0;
-            margin-top: -20px;
+            padding-top: 80px;
+            
+            margin-top: 0;
+           
+
         }
 
         /* Hero Section */
         .front {
             background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('/images/iris.webp') no-repeat center center;
-            background-size: cover;
-            background-attachment: fixed;
+            background-size: cover !important;
+            background-attachment: fixed !important;
+            background-repeat: no-repeat !important;
+            background-position: center center !important;
             font-family: Georgia, 'Times New Roman', Times, serif;
             padding: 0 5%;
             color: white;
-            height: 100vh;
+            height: calc(100vh - 80px);
             display: flex;
             align-items: center;
             position: relative;
-            border-radius: 0px 0px 30px 30px;
+            border-radius: 15px 15px 15px 15px;
             overflow: hidden;
+            margin: 0 auto !important;
+            
+            width: 95% !important;
+            
         }
 
         .front::before {
@@ -111,7 +129,7 @@
             border-radius: 2px;
         }
 
-        #btn1 {
+        #btn-find {
             display: inline-block;
             border: none;
             border-radius: 50px;
@@ -127,7 +145,7 @@
             margin-top: 30px;
         }
 
-        #btn1:hover {
+        #btn-find:hover {
             transform: translateY(-3px) scale(1.05);
             box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
             background: linear-gradient(135deg, #5a67d8, #667eea);
@@ -193,6 +211,7 @@
             0% {
                 transform: translateX(100%);
             }
+
             100% {
                 transform: translateX(-100%);
             }
@@ -203,6 +222,7 @@
                 opacity: 0;
                 transform: translateY(50px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -211,8 +231,12 @@
 
         /* Featured Vehicles Section */
         .find-car-section {
-            max-width: 1400px;
-            margin: 0 auto;
+            max-width: none !important;
+            border-radius: 15px;
+            width: 95% !important;
+
+            margin: 0 auto !important;
+
             padding: 60px 20px;
             background: linear-gradient(135deg, #f8fafc, #e2e8f0);
         }
@@ -234,17 +258,15 @@
             max-width: 600px;
             margin-left: auto;
             margin-right: auto;
-            
         }
 
         .vehicle {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            
+            gap: 30px;
             justify-content: center;
             justify-items: center;
             padding: 20px 0;
-            
         }
 
         .card {
@@ -309,7 +331,6 @@
 
         .card-content {
             padding: 20px;
-            padding-top: 60px;
         }
 
         .card-title {
@@ -380,25 +401,75 @@
             margin-top: auto;
         }
 
-        /* Responsive Design */
+        /* ===== CRITICAL RESPONSIVE FIXES ===== */
+
+        /* Fix navbar issues for all responsive sizes */
         @media screen and (max-width: 1024px) {
             .navbar {
                 width: 98%;
             }
+        }
 
-            .find-car-section {
-                padding: 40px 15px;
+        /* Critical fix for 550px to 750px range */
+        @media (min-width: 550px) and (max-width: 750px) {
+
+            /* Ensure navbar stays properly positioned */
+            .navbar {
+                position: fixed !important;
+                top: 10px !important;
+                left: 50% !important;
+                transform: translateX(-50%) !important;
+                z-index: 1000 !important;
+                width: 95% !important;
             }
 
-            .vehicle {
-                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-                gap: 25px;
+            /* Adjust content padding to prevent overlap */
+            .content {
+                padding-top: 85px !important;
+            }
+
+            .front {
+                height: calc(100vh - 85px) !important;
             }
         }
 
         @media screen and (max-width: 768px) {
             .front {
-                height: 100vh;
+                background-attachment: scroll !important;
+                /* Disable fixed attachment on mobile */
+                width: 95% !important;
+            }
+
+            .find-car-section {
+                width: 95% !important;
+                padding: 40px 15px;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .front {
+                width: 95% !important;
+                padding: 0 15px;
+            }
+
+            .find-car-section {
+                width: 95% !important;
+                padding: 30px 10px;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .navbar {
+                width: 98%;
+                top: 10px;
+            }
+
+            .content {
+                padding-top: 85px;
+            }
+
+            .front {
+                height: calc(100vh - 85px);
                 background-attachment: scroll;
                 padding: 0 20px;
                 border-radius: 0px 0px 20px 20px;
@@ -457,16 +528,21 @@
                 width: 95%;
             }
 
+            .content {
+                padding-top: 75px;
+            }
+
             .front {
                 padding: 0 15px;
                 border-radius: 0px 0px 15px 15px;
+                height: calc(100vh - 75px);
             }
 
             .frontcontent {
                 padding: 20px 0;
             }
 
-            #btn1 {
+            #btn-find {
                 padding: 12px 30px;
                 width: 100%;
                 max-width: 280px;
@@ -548,6 +624,11 @@
             outline: 3px solid rgba(102, 126, 234, 0.4);
             outline-offset: 2px;
         }
+
+        /* Ensure body doesn't have horizontal scroll */
+        body {
+            overflow-x: hidden !important;
+        }
     </style>
 </head>
 
@@ -555,124 +636,136 @@
     <div class="page-container">
         <%- include('../partials/clientnavbar') %>
 
-        <div class="content">
-            <!-- Hero Section -->
-            <div class="front">
-                <div class="frontcontent">
-                    <h1 class="quote">Drive your dreams — rent the ride,<br> own the experience.</h1>
-                    <p class="subtitle">FIND THE PERFECT CAR FOR TODAY</p>
-                    <hr class="divider">
-                    <a href="/cars" id="btn1">
-                        <i class="fas fa-search"></i>
-                        Find Your Car Now
-                    </a>
-                </div>
-            </div>
-
-            <!-- Brand Slider -->
-            <div class="slider-container">
-                <div class="slider">
-                    <div class="brand">
-                        <img src="/images/download (1).jpg" alt="Toyota">
-                        <label>Toyota</label>
-                    </div>
-                    <div class="brand">
-                        <img src="/images/download (1).png" alt="Hyundai">
-                        <label>Hyundai</label>
-                    </div>
-                    <div class="brand">
-                        <img src="/images/images.png" alt="Maruti Suzuki">
-                        <label>Maruti Suzuki</label>
-                    </div>
-                    <div class="brand">
-                        <img src="/images/download.png" alt="Mahindra">
-                        <label>Mahindra</label>
-                    </div>
-                    <div class="brand">
-                        <img src="/images/images.jpg" alt="Tata Motors">
-                        <label>Tata Motors</label>
-                    </div>
-                    <div class="brand">
-                        <img src="/images/download (1).jpg" alt="Toyota">
-                        <label>Toyota</label>
+            <div class="content">
+                <!-- Hero Section -->
+                <div class="front">
+                    <div class="frontcontent">
+                        <h1 class="quote">Drive your dreams — rent the ride,<br> own the experience.</h1>
+                        <p class="subtitle">FIND THE PERFECT CAR FOR TODAY</p>
+                        <hr class="divider">
+                        <a href="/cars" id="btn-find">
+                            <i class="fas fa-search"></i>
+                            Find Your Car Now
+                        </a>
                     </div>
                 </div>
-            </div>
 
-            <!-- Featured Vehicles Section -->
-            <div class="find-car-section">
-                <h2>Featured Vehicles</h2>
-                <p class="section-subtitle">
-                    Explore our selection of premium vehicles available for your next adventure
-                </p>
-                
-                <div class="vehicle">
-                    <% vehicle.forEach((v, i)=> { %>
-                        <div class="card loading" >
-                            <a href="/car/<%= v._id %>">
-                                <div class="image-container">
-                                    <span class="available">
-                                        <%= v.available %>
-                                    </span>
-                                    <% if (v.images && v.images.length > 0) { %>
-                                        <img src="<%= v.images[0] %>" alt="<%= v.brand %> <%= v.name %>">
-                                    <% } else { %>
-                                        <img src="/no-image.png" alt="No Image Available">
-                                    <% } %>
-                                    <span class="price">₹<%= v.price %>/day</span>
-                                </div>
+                <!-- Brand Slider -->
+                <div class="slider-container">
+                    <div class="slider">
+                        <div class="brand">
+                            <img src="/images/download (1).jpg" alt="Toyota">
+                            <label>Toyota</label>
+                        </div>
+                        <div class="brand">
+                            <img src="/images/download (1).png" alt="Hyundai">
+                            <label>Hyundai</label>
+                        </div>
+                        <div class="brand">
+                            <img src="/images/images.png" alt="Maruti Suzuki">
+                            <label>Maruti Suzuki</label>
+                        </div>
+                        <div class="brand">
+                            <img src="/images/download.png" alt="Mahindra">
+                            <label>Mahindra</label>
+                        </div>
+                        <div class="brand">
+                            <img src="/images/images.jpg" alt="Tata Motors">
+                            <label>Tata Motors</label>
+                        </div>
+                        <div class="brand">
+                            <img src="/images/download (1).jpg" alt="Toyota">
+                            <label>Toyota</label>
+                        </div>
+                    </div>
+                </div>
 
-                                <div class="card-content">
-                                    <h3 class="card-title"><%= v.brand %></h3>
-                                    <p class="card-subtitle"><%= v.name %> - <%= v.year %></p>
+                <!-- Featured Vehicles Section -->
+                <div class="find-car-section">
+                    <h2>Featured Vehicles</h2>
+                    <p class="section-subtitle">
+                        Explore our selection of premium vehicles available for your next adventure
+                    </p>
 
-                                    <div class="card-details">
-                                        <div class="detail-item">
-                                            <i class="fa-solid fa-users"></i>
-                                            <span><%= v.seating %> Seats</span>
-                                        </div>
-                                        <div class="detail-item">
-                                            <i class="fa-solid fa-location-dot"></i>
-                                            <span><%= v.location || "Available" %></span>
-                                        </div>
-                                        <div class="detail-item">
-                                            <i class="fa-solid fa-gas-pump"></i>
-                                            <span><%= v.fuel %></span>
-                                        </div>
-                                        <div class="detail-item">
-                                            <i class="fa-solid fa-car-side"></i>
-                                            <span><%= v.mode || "Standard" %></span>
+                    <div class="vehicle">
+                        <% vehicle.forEach((v, i)=> { %>
+                            <div class="card loading">
+                                <a href="/car/<%= v._id %>">
+                                    <div class="image-container">
+                                        <span class="available">
+                                            <%= v.available %>
+                                        </span>
+                                        <% if (v.images && v.images.length> 0) { %>
+                                            <img src="<%= v.images[0] %>" alt="<%= v.brand %> <%= v.name %>">
+                                            <% } else { %>
+                                                <img src="/no-image.png" alt="No Image Available">
+                                                <% } %>
+                                                    <span class="price">₹<%= v.price %>/day</span>
+                                    </div>
+
+                                    <div class="card-content">
+                                        <h3 class="card-title">
+                                            <%= v.brand %>
+                                        </h3>
+                                        <p class="card-subtitle">
+                                            <%= v.name %> - <%= v.year %>
+                                        </p>
+
+                                        <div class="card-details">
+                                            <div class="detail-item">
+                                                <i class="fa-solid fa-users"></i>
+                                                <span>
+                                                    <%= v.seating %> Seats
+                                                </span>
+                                            </div>
+                                            <div class="detail-item">
+                                                <i class="fa-solid fa-location-dot"></i>
+                                                <span>
+                                                    <%= v.location || "Available" %>
+                                                </span>
+                                            </div>
+                                            <div class="detail-item">
+                                                <i class="fa-solid fa-gas-pump"></i>
+                                                <span>
+                                                    <%= v.fuel %>
+                                                </span>
+                                            </div>
+                                            <div class="detail-item">
+                                                <i class="fa-solid fa-car-side"></i>
+                                                <span>
+                                                    <%= v.mode || "Standard" %>
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </a>
-                        </div>
-                    <% }) %>
+                                </a>
+                            </div>
+                            <% }) %>
+                    </div>
+
+                    <div class="explorecar">
+                        <a href="/cars">
+                            Explore All Cars
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
                 </div>
-                
-                <div class="explorecar">
-                    <a href="/cars">
-                        Explore All Cars 
-                        <i class="fa-solid fa-arrow-right"></i>
-                    </a>
+
+                <!-- Reviews Section -->
+                <div class="review">
+                    <%- include('./reviewmainpage') %>
                 </div>
             </div>
 
-            <!-- Reviews Section -->
-            <div class="review">
-                <%- include('./reviewmainpage') %>
-            </div>
-        </div>
-
-        <!-- Footer -->
-        <footer class="footer">
-            <%- include('../partials/footer') %>
-        </footer>
+            <!-- Footer -->
+            <footer class="footer">
+                <%- include('../partials/footer') %>
+            </footer>
     </div>
 
     <script>
         // Add loading animations
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const cards = document.querySelectorAll('.loading');
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
