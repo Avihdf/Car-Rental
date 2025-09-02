@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>404 - Page Not Found</title>
+  <style>
+    /* Reset and base styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Quicksand', sans-serif;
+      background: linear-gradient(135deg, #a0b8ec, #e7a8a8);
+      overflow-x: hidden;
+      color: white;
+    }
+
+    .page-container {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .navbar {
+      position: fixed;
+      top: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      width: 95%;
+      max-width: 1200px;
+      background: transparent; /* ensure transparent or desired BG */
+    }
+
+    main[role="main"] {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 100px 20px 40px; /* padding-top to avoid navbar overlap */
+    }
+
+    .container {
+      max-width: 450px;
+      background: rgba(0, 0, 0, 0.35);
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      animation: fadeInUp 0.8s ease forwards;
+      width: 100%;
+      color: white;
+    }
+
+    .error-code {
+      font-size: clamp(72px, 15vw, 120px);
+      font-weight: 900;
+      letter-spacing: 10px;
+      margin-bottom: 20px;
+      text-shadow: 0 0 10px rgba(255 255 255 / 0.4);
+    }
+
+    .error-message {
+      font-size: clamp(20px, 5vw, 30px);
+      margin-bottom: 25px;
+      font-weight: 700;
+    }
+
+    .error-description {
+      font-size: clamp(14px, 3vw, 18px);
+      margin-bottom: 35px;
+      color: rgba(220, 220, 224, 0.8);
+      line-height: 1.5;
+    }
+
+    .home-button {
+      display: inline-block;
+      background: white;
+      color: #667eea;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: clamp(14px, 3vw, 18px);
+      padding: 16px 40px;
+      border-radius: 50px;
+      box-shadow: 0 15px 30px rgba(102 126 234 / 0.4);
+      text-decoration: none;
+      letter-spacing: 2px;
+      transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+    }
+
+    .home-button:hover,
+    .home-button:focus-visible {
+      background-color: #4f6ee9;
+      color: white;
+      transform: translateY(-3px);
+      box-shadow: 0 15px 35px rgba(79 110 233 / 0.7);
+      outline: none;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive resizing */
+    @media (max-width: 600px) {
+      .container {
+        padding: 30px 20px;
+      }
+
+      .error-code {
+        font-size: 90px;
+        letter-spacing: 6px;
+      }
+
+      .error-message {
+        font-size: 22px;
+      }
+
+      .error-description {
+        font-size: 16px;
+        margin-bottom: 25px;
+      }
+
+      .home-button {
+        padding: 14px 35px;
+        font-size: 16px;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .container {
+        padding: 25px 15px;
+      }
+
+      .error-code {
+        font-size: 72px;
+        letter-spacing: 4px;
+      }
+
+      .error-message {
+        font-size: 18px;
+      }
+
+      .error-description {
+        font-size: 14px;
+        margin-bottom: 20px;
+      }
+
+      .home-button {
+        padding: 12px 30px;
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page-container">
+    
+      <%- include('../partials/clientnavbar') %>
+    
+
+    <main role="main" aria-labelledby="error-title">
+      <div class="container" role="document">
+        <div class="error-code" aria-hidden="true">404</div>
+        <h1 id="error-title" class="error-message">Oops! Page Not Found.</h1>
+        <p class="error-description">
+          The page you are looking for might have been removed, had its name changed,
+          or is temporarily unavailable.
+        </p>
+        <a href="/" class="home-button" role="link" aria-label="Go back to homepage">Go Back Home</a>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <%- include('../partials/footer') %>
+    </footer>
+  </div>
+</body>
+
+</html>

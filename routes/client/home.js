@@ -10,4 +10,6 @@ router.get('/logout',home.logout)
 router.get('/review',home.showreview)
 router.post('/review/:id',home.userreview)
 
+router.get('/pagenotfound',home.showpagenotfound)
+
 module.exports = router;

@@ -22,7 +22,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            
+
         }
 
         html {
@@ -35,33 +35,37 @@
             line-height: 1.6;
             background: linear-gradient(135deg, #a0b8ec 0%, #e7a8a8 100%);
             min-height: 100vh;
-        } 
+        }
 
         .page-container {
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-           
+
         }
 
         /* Fixed navbar positioning - THIS IS CRITICAL */
         .navbar {
             position: fixed;
-            top: 10px;
+            top: 15px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 1000;
             width: 95%;
             max-width: 1200px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
         }
 
         /* Ensure content doesn't overlap with fixed navbar */
         .content {
             flex: 1;
             padding-top: 80px;
-            
+
             margin-top: 0;
-           
+
 
         }
 
@@ -82,9 +86,9 @@
             border-radius: 15px 15px 15px 15px;
             overflow: hidden;
             margin: 0 auto !important;
-            
+
             width: 95% !important;
-            
+
         }
 
         .front::before {
@@ -262,27 +266,32 @@
 
         .vehicle {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 30px;
             justify-content: center;
-            justify-items: center;
-            padding: 20px 0;
+            padding: 20px;
+            max-width: 1300px;
+            margin: 0 auto;
         }
 
+        /* Card styling */
         .card {
-            background: rgb(228, 221, 221);
-            width: 420px;
-            height: 450px;
-            border-radius: 20px;
+            background: #f8f8f8;
+            width: 100%;
+            max-width: 380px;
+            border-radius: 22px;
             overflow: hidden;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07), 0 1.5px 5px rgba(0, 0, 0, 0.06);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             border: 1px solid rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            margin: 0 auto;
         }
 
         .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            transform: translateY(-8px);
+            box-shadow: 0 16px 30px rgba(0, 0, 0, 0.15);
         }
 
         .image-container {
@@ -405,8 +414,42 @@
 
         /* Fix navbar issues for all responsive sizes */
         @media screen and (max-width: 1024px) {
-            .navbar {
-                width: 98%;
+            .find-car-section .vehicle {
+                gap: 28px 18px;
+                padding: 32px 0 10px 0;
+                grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            }
+
+            .card {
+                max-width: 340px;
+                border-radius: 18px;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .find-car-section .vehicle {
+                gap: 19px;
+                padding: 24px 0 8px 0;
+                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            }
+
+            .card {
+                max-width: 95%;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .find-car-section .vehicle {
+                gap: 13px;
+                padding: 12px 0 6px 0;
+                grid-template-columns: 1fr;
+            }
+
+            .card {
+                margin: 0 auto;
+                max-width: 99%;
+                border-radius: 14px;
+                height: auto;
             }
         }
 
@@ -430,6 +473,35 @@
 
             .front {
                 height: calc(100vh - 85px) !important;
+            }
+        }
+
+        @media screen and (max-width: 1024px) {
+            .vehicle {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 20px;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .vehicle {
+                grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+                gap: 15px;
+                padding: 10px;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .vehicle {
+                grid-template-columns: 1fr;
+                gap: 15px;
+                padding: 10px;
+            }
+
+            .card {
+                max-width: 95%;
+                margin: 0 auto;
+                height: auto;
             }
         }
 
@@ -780,25 +852,25 @@
             });
 
             // Smooth scroll for internal links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    document.querySelector(this.getAttribute('href')).scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                });
-            });
+            // document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            //     anchor.addEventListener('click', function (e) {
+            //         e.preventDefault();
+            //         document.querySelector(this.getAttribute('href')).scrollIntoView({
+            //             behavior: 'smooth'
+            //         });
+            //     });
+            // });
         });
 
-        // Parallax effect for hero section
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const parallax = document.querySelector('.front');
-            const speed = scrolled * 0.5;
-            if (parallax && window.innerWidth > 768) {
-                parallax.style.backgroundPosition = `center ${speed}px`;
-            }
-        });
+        // // Parallax effect for hero section
+        // window.addEventListener('scroll', () => {
+        //     const scrolled = window.pageYOffset;
+        //     const parallax = document.querySelector('.front');
+        //     const speed = scrolled * 0.5;
+        //     if (parallax && window.innerWidth > 768) {
+        //         parallax.style.backgroundPosition = `center ${speed}px`;
+        //     }
+        // });
     </script>
 </body>
 
