@@ -295,7 +295,7 @@
             cursor: pointer;
             transition: all 0.3s ease;
             text-transform: uppercase;
-            letter-spacing: 0.5px; 
+            letter-spacing: 0.5px;
         }
 
         .cancel-btn:hover {
@@ -307,8 +307,8 @@
         .dropdown-content1 {
             display: none;
             position: absolute;
-            top: 45px;
-            left: -20px;
+            top: -60px;
+            left: -90px;
             transform: translateX(-50%);
             background: white;
             border-radius: 15px;
@@ -527,7 +527,7 @@
             transform: translateX(-50%);
             min-width: 200px;
         } */
-        
+
 
         @media (max-width: 480px) {
             .mainpage {
@@ -671,8 +671,8 @@
 
                                         <td data-label="Car Details">
                                             <div class="car-details">
-                                                <img src="<%= b.car_id.images[0] %>"
-                                                    alt="<%= b.car_id.brand %>" class="car-image" />
+                                                <img src="<%= b.car_id.images[0] %>" alt="<%= b.car_id.brand %>"
+                                                    class="car-image" />
                                                 <div class="car-info">
                                                     <h4>
                                                         <%= b.car_id.brand %>
@@ -769,6 +769,7 @@
     </div>
 
     <script>
+
         // Close dropdown when clicking No
         function closeDropdown(button) {
             const dropdown = button.closest('.dropdown1');
@@ -776,38 +777,65 @@
             dropdownContent.style.display = 'none';
         }
 
-        // Close dropdowns when clicking outside
-        document.addEventListener('click', function (event) {
-            const dropdowns = document.querySelectorAll('.dropdown-content1');
-            dropdowns.forEach(dropdown => {
-                if (!dropdown.closest('.dropdown1').contains(event.target)) {
-                    dropdown.style.display = 'none';
-                }
-            });
-        });
-
-        // Animate table rows on scroll
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver(function (entries) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        // Initialize animations
+        // Toggle dropdown on cancel button click
         document.addEventListener('DOMContentLoaded', function () {
+            // Add click event to all cancel buttons
+            document.querySelectorAll('.cancel-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation(); // Prevent event bubbling
+
+                    const dropdown = btn.closest('.dropdown1');
+                    const dropdownContent = dropdown.querySelector('.dropdown-content1');
+
+                    // Close other open dropdowns
+                    document.querySelectorAll('.dropdown-content1').forEach(dc => {
+                        if (dc !== dropdownContent) {
+                            dc.style.display = 'none';
+                        }
+                    });
+
+                    // Toggle current dropdown
+                    if (dropdownContent.style.display === 'block') {
+                        dropdownContent.style.display = 'none';
+                    } else {
+                        dropdownContent.style.display = 'block';
+                    }
+                });
+            });
+
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function (event) {
+                const dropdowns = document.querySelectorAll('.dropdown-content1');
+                dropdowns.forEach(dropdown => {
+                    if (!dropdown.closest('.dropdown1').contains(event.target)) {
+                        dropdown.style.display = 'none';
+                    }
+                });
+            });
+
+            // Animate table rows on scroll
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function (entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Initialize animations
             const rows = document.querySelectorAll('tbody tr');
             rows.forEach(row => {
                 observer.observe(row);
             });
         });
+
+
     </script>
 </body>
 
