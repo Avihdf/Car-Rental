@@ -38,6 +38,7 @@
             z-index: 1000;
         }
 
+
         .navbar .logo {
             font-family: "Bruno Ace SC", cursive;
             font-size: 32px;
@@ -103,7 +104,7 @@
             font-family: 'Iceland', sans-serif;
             display: flex;
             align-items: center;
-            
+
             gap: 8px;
             transition: all 0.3s ease;
         }
@@ -147,8 +148,15 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .navbar .menu-toggle {
@@ -214,6 +222,7 @@
                 opacity: 0;
                 transform: translateY(-20px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -303,7 +312,7 @@
             .navbar {
                 display: flex;
             }
-            
+
             .mobilenavbar {
                 display: none !important;
             }
@@ -313,7 +322,7 @@
             .navbar {
                 display: none;
             }
-            
+
             .mobilenavbar {
                 display: flex;
             }
@@ -347,6 +356,8 @@
                 padding: 10px 12px;
             }
         }
+
+        
     </style>
 </head>
 
@@ -363,7 +374,7 @@
         </div>
 
         <div class="auth">
-            <% if (typeof user !== 'undefined' && user) { %>
+            <% if (typeof user !=='undefined' && user) { %>
                 <div class="dropdown">
                     <button class="dropbtn" onclick="toggleDropdown('desktop')">
                         <i class="fa-solid fa-circle-user"></i>
@@ -376,9 +387,9 @@
                         <a href="/logout"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
                     </div>
                 </div>
-            <% } else { %>
-                <a href="/login"><i class="fa-solid fa-circle-user"></i> Login</a>
-            <% } %>
+                <% } else { %>
+                    <a href="/login"><i class="fa-solid fa-circle-user"></i> Login</a>
+                    <% } %>
         </div>
     </div>
 
@@ -398,10 +409,12 @@
             </div>
 
             <div class="mobile-auth">
-                <% if (typeof user !== 'undefined' && user) { %>
+                <% if (typeof user !=='undefined' && user) { %>
                     <div class="mobile-user-info">
                         <i class="fa-solid fa-circle-user"></i>
-                        <span><%= user.name %></span>
+                        <span>
+                            <%= user.name %>
+                        </span>
                     </div>
                     <div class="mobile-user-links">
                         <a href="/userprofile/<%=user._id%>">
@@ -417,13 +430,13 @@
                             <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
                         </a>
                     </div>
-                <% } else { %>
-                    <div class="mobile-login">
-                        <a href="/login">
-                            <i class="fa-solid fa-circle-user"></i> Login
-                        </a>
-                    </div>
-                <% } %>
+                    <% } else { %>
+                        <div class="mobile-login">
+                            <a href="/login">
+                                <i class="fa-solid fa-circle-user"></i> Login
+                            </a>
+                        </div>
+                        <% } %>
             </div>
         </div>
     </div>
@@ -434,9 +447,9 @@
         function toggleMobileMenu() {
             const mobileMenu = document.getElementById('mobileMenu');
             const menuToggle = document.getElementById('mobileMenuToggle');
-            
+
             mobileMenuOpen = !mobileMenuOpen;
-            
+
             if (mobileMenuOpen) {
                 mobileMenu.classList.add('show');
                 menuToggle.classList.remove('fa-bars');
@@ -455,11 +468,11 @@
         }
 
         // Close mobile menu when clicking on links
-        document.addEventListener('click', function(event) {
+        document.addEventListener('click', function (event) {
             const mobileMenu = document.getElementById('mobileMenu');
             const menuToggle = document.getElementById('mobileMenuToggle');
             const mobileNavbar = document.getElementById('mobilenavbar');
-            
+
             // Close mobile menu if clicking on mobile nav links
             if (event.target.closest('.mobile-nav-links a') || event.target.closest('.mobile-user-links a')) {
                 mobileMenu.classList.remove('show');
@@ -467,7 +480,7 @@
                 menuToggle.classList.add('fa-bars');
                 mobileMenuOpen = false;
             }
-            
+
             // Close dropdown if clicking outside
             if (!event.target.closest('.dropdown')) {
                 const dropdown = document.getElementById("desktopDropdown");
@@ -475,7 +488,7 @@
                     dropdown.classList.remove('show');
                 }
             }
-            
+
             // Close mobile menu if clicking outside
             if (!mobileNavbar.contains(event.target) && mobileMenuOpen) {
                 mobileMenu.classList.remove('show');
@@ -486,11 +499,11 @@
         });
 
         // Handle window resize
-        window.addEventListener('resize', function() {
+        window.addEventListener('resize', function () {
             if (window.innerWidth > 768 && mobileMenuOpen) {
                 const mobileMenu = document.getElementById('mobileMenu');
                 const menuToggle = document.getElementById('mobileMenuToggle');
-                
+
                 mobileMenu.classList.remove('show');
                 menuToggle.classList.remove('fa-times');
                 menuToggle.classList.add('fa-bars');
