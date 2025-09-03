@@ -6,8 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vehicle List - Driven Admin</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
     <style>
         * {
             box-sizing: border-box;
@@ -128,7 +129,7 @@
             border: 1px solid rgba(255, 255, 255, 0.3);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             align-items: center;
-            
+
             animation: fadeInUp 0.6s ease forwards;
         }
 
@@ -277,8 +278,8 @@
         .dropdown-content1 {
             display: none;
             position: absolute;
-            top: 60px;
-            right: 0;
+            top: -20px;
+            right: 30px;
             background: white;
             border-radius: 15px;
             padding: 20px;
@@ -294,6 +295,7 @@
                 opacity: 0;
                 transform: translateY(-10px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -305,6 +307,7 @@
                 opacity: 0;
                 transform: translateY(30px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -547,7 +550,7 @@
         <div class="navbar">
             <%- include('../partials/navbar') %>
         </div>
-        
+
         <div class="mainpage">
             <div class="page-header">
                 <h1 class="page-title">
@@ -555,7 +558,7 @@
                     Vehicle Fleet Management
                 </h1>
                 <p class="page-subtitle">Manage and monitor your vehicle inventory</p>
-                
+
                 <div class="stats-bar">
                     <div class="stat-item">
                         <i class="fas fa-car"></i>
@@ -563,45 +566,54 @@
                     </div>
                     <div class="stat-item">
                         <i class="fas fa-check-circle"></i>
-                        Available: <%= vehicle.filter(v => v.available === 'Available').length %>
+                        Available: <%= vehicle.filter(v=> v.available === 'Available').length %>
                     </div>
-                    
+
                 </div>
             </div>
 
             <div class="vehicles-container">
-                <% if (vehicle && vehicle.length > 0) { %>
-                    <% vehicle.forEach((v, i) => { %>
-                        <div class="card-container" style=`animation-delay: <%= i * 0.1 %>s;`>
+                <% if (vehicle && vehicle.length> 0) { %>
+                    <% vehicle.forEach((v, i)=> { %>
+                        <div class="card-container" style=`animation-delay: <%=i * 0.1 %>s;`>
                             <div class="vehicle-image">
-                                <% if (v.images && v.images.length > 0) { %>
+                                <% if (v.images && v.images.length> 0) { %>
                                     <img src="<%= v.images[0] %>" alt="<%= v.brand %> <%= v.name %>">
-                                <% } else { %>
-                                    <img src="/no-image.png" alt="No Image Available">
-                                <% } %>
-                                <div class="availability-badge">
-                                    <%= v.available || 'Available' %>
-                                </div>
+                                    <% } else { %>
+                                        <img src="/no-image.png" alt="No Image Available">
+                                        <% } %>
+                                            <div class="availability-badge">
+                                                <%= v.available || 'Available' %>
+                                            </div>
                             </div>
 
                             <div class="vehicle-details">
-                                <h3 class="vehicle-title"><%= v.brand %> <%= v.name %></h3>
-                                
+                                <h3 class="vehicle-title">
+                                    <%= v.brand %>
+                                        <%= v.name %>
+                                </h3>
+
                                 <div class="details-grid">
                                     <div class="detail-item">
                                         <i class="fas fa-calendar"></i>
                                         <span class="detail-label">Year:</span>
-                                        <span class="detail-value"><%= v.year %></span>
+                                        <span class="detail-value">
+                                            <%= v.year %>
+                                        </span>
                                     </div>
                                     <div class="detail-item">
                                         <i class="fas fa-gas-pump"></i>
                                         <span class="detail-label">Fuel:</span>
-                                        <span class="detail-value"><%= v.fuel %></span>
+                                        <span class="detail-value">
+                                            <%= v.fuel %>
+                                        </span>
                                     </div>
                                     <div class="detail-item">
                                         <i class="fas fa-hashtag"></i>
                                         <span class="detail-label">Vehicle No:</span>
-                                        <span class="detail-value"><%= v.vehiclenumber %></span>
+                                        <span class="detail-value">
+                                            <%= v.vehiclenumber %>
+                                        </span>
                                     </div>
                                     <div class="detail-item">
                                         <i class="fas fa-rupee-sign"></i>
@@ -611,12 +623,16 @@
                                     <div class="detail-item">
                                         <i class="fas fa-users"></i>
                                         <span class="detail-label">Seating:</span>
-                                        <span class="detail-value"><%= v.seating || 'N/A' %> seats</span>
+                                        <span class="detail-value">
+                                            <%= v.seating || 'N/A' %> seats
+                                        </span>
                                     </div>
                                     <div class="detail-item">
                                         <i class="fas fa-map-marker-alt"></i>
                                         <span class="detail-label">Location:</span>
-                                        <span class="detail-value"><%= v.location || 'All Locations' %></span>
+                                        <span class="detail-value">
+                                            <%= v.location || 'All Locations' %>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -625,7 +641,7 @@
                                 <a href="/admin/editvehicle/<%= v._id %>" class="edit-btn" title="Edit Vehicle">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                
+
                                 <div class="dropdown1">
                                     <button class="delete-btn" title="Delete Vehicle">
                                         <i class="fas fa-trash"></i>
@@ -634,13 +650,15 @@
                                         <div class="delete-confirmation">
                                             <p>Are you sure you want to delete this vehicle?</p>
                                             <div class="confirmation-buttons">
-                                                <form action="/admin/delete/<%= v._id %>" method="POST" style="display: inline;">
+                                                <form action="/admin/delete/<%= v._id %>" method="POST"
+                                                    style="display: inline;">
                                                     <input type="hidden" name="id" value="<%= v._id %>">
                                                     <button type="submit" class="confirm-btn confirm-yes">
                                                         <i class="fas fa-check"></i> Yes
                                                     </button>
                                                 </form>
-                                                <button type="button" class="confirm-btn confirm-no" onclick="closeDropdown(this)">
+                                                <button type="button" class="confirm-btn confirm-no"
+                                                    onclick="closeDropdown(this)">
                                                     <i class="fas fa-times"></i> No
                                                 </button>
                                             </div>
@@ -649,14 +667,14 @@
                                 </div>
                             </div>
                         </div>
-                    <% }) %>
-                <% } else { %>
-                    <div class="empty-state">
-                        <i class="fas fa-car"></i>
-                        <h3>No Vehicles Found</h3>
-                        <p>Start by adding your first vehicle to the fleet.</p>
-                    </div>
-                <% } %>
+                        <% }) %>
+                            <% } else { %>
+                                <div class="empty-state">
+                                    <i class="fas fa-car"></i>
+                                    <h3>No Vehicles Found</h3>
+                                    <p>Start by adding your first vehicle to the fleet.</p>
+                                </div>
+                                <% } %>
             </div>
         </div>
     </div>
@@ -670,7 +688,7 @@
         }
 
         // Close dropdowns when clicking outside
-        document.addEventListener('click', function(event) {
+        document.addEventListener('click', function (event) {
             const dropdowns = document.querySelectorAll('.dropdown-content1');
             dropdowns.forEach(dropdown => {
                 if (!dropdown.closest('.dropdown1').contains(event.target)) {
@@ -685,7 +703,7 @@
             rootMargin: '0px 0px -50px 0px'
         };
 
-        const observer = new IntersectionObserver(function(entries) {
+        const observer = new IntersectionObserver(function (entries) {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.style.opacity = '1';
@@ -694,8 +712,42 @@
             });
         }, observerOptions);
 
+        document.addEventListener('DOMContentLoaded', function () {
+            // Select all delete buttons inside dropdown1 containers
+            const deleteButtons = document.querySelectorAll('.dropdown1 > .delete-btn');
+
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function (e) {
+                    e.stopPropagation(); // Prevent click event from bubbling
+
+                    const dropdown = button.closest('.dropdown1');
+                    const dropdownContent = dropdown.querySelector('.dropdown-content1');
+
+                    // Toggle dropdown content visibility
+                    if (dropdownContent.style.display === 'block') {
+                        dropdownContent.style.display = 'none';
+                    } else {
+                        // Close other open dropdowns before opening the clicked one
+                        document.querySelectorAll('.dropdown-content1').forEach(dc => {
+                            dc.style.display = 'none';
+                        });
+
+                        dropdownContent.style.display = 'block';
+                    }
+                });
+            });
+
+            // Clicking outside closes all dropdowns
+            document.addEventListener('click', function () {
+                document.querySelectorAll('.dropdown-content1').forEach(dc => {
+                    dc.style.display = 'none';
+                });
+            });
+        });
+
+
         // Observe all vehicle cards
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const cards = document.querySelectorAll('.card-container');
             cards.forEach(card => {
                 observer.observe(card);

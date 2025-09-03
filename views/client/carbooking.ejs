@@ -246,6 +246,57 @@
             line-height: 1.7;
         }
 
+        .payment-option {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 20px;
+            border: 2px solid rgba(102, 126, 234, 0.3);
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .payment-option:hover {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.05);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
+        }
+
+        .payment-option.selected {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .payment-option input[type="radio"] {
+            width: 20px;
+            height: 20px;
+            accent-color: #667eea;
+            cursor: pointer;
+        }
+
+        .payment-icon {
+            font-size: 28px;
+            color: #667eea;
+            width: 40px;
+            text-align: center;
+        }
+
+        .payment-details {
+            flex: 1;
+        }
+
+        .payment-details h4 {
+            margin: 0 0 5px 0;
+            font-size: 18px;
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+
         /* Features Section */
         .features-section {
             margin-bottom: 30px;
@@ -427,19 +478,21 @@
 
         /* Responsive Design */
         /* Collapse layout below 1200px */
-@media screen and (max-width: 1220px) {
-    .vehicle {
-        grid-template-columns: 1fr; /* Make it single-column */
-        gap: 30px;
-        padding: 15px;
-    }
+        @media screen and (max-width: 1220px) {
+            .vehicle {
+                grid-template-columns: 1fr;
+                /* Make it single-column */
+                gap: 30px;
+                padding: 15px;
+            }
 
-    .booking {
-        position: static; /* Remove sticky positioning */
-        max-width: 600px;
-        margin: 0 auto;
-    }
-}
+            .booking {
+                position: static;
+                /* Remove sticky positioning */
+                max-width: 600px;
+                margin: 0 auto;
+            }
+        }
 
 
         @media screen and (max-width: 1024px) {
@@ -699,22 +752,21 @@
                                     <input type="date" name="returndate" id="return" class="form-input" required>
                                 </div>
 
-                                <% if (car.available==="Unavailable" ) { %>
-                                    <button type="button" class="book-button" disabled>
-                                        <i class="fas fa-times"></i>
-                                        Car Not Available
-                                    </button>
-                                    <% } else { %>
-                                        <button type="submit" class="book-button">
-                                            <i class="fas fa-calendar-check"></i>
-                                            Book Now
-                                        </button>
-                                        <% } %>
+                                
 
-                                            <div class="booking-note">
-                                                <i class="fas fa-info-circle"></i>
-                                                No credit card required for reservation
-                                            </div>
+                                    <% if (car.available==="Unavailable" ) { %>
+                                        <button type="button" class="book-button" disabled>
+                                            <i class="fas fa-times"></i>
+                                            Car Not Available
+                                        </button>
+                                        <% } else { %>
+                                            <button type="submit" class="book-button">
+                                                <i class="fas fa-calendar-check"></i>
+                                                Book Now
+                                            </button>
+                                            <% } %>
+
+
                     </form>
                 </div>
             </div>
@@ -743,6 +795,23 @@
                 nextDay.setDate(pickupDate.getDate() + 1);
                 document.getElementById('return').min = nextDay.toISOString().split('T')[0];
             });
+
+            form.addEventListener('submit', function (e) {
+                const pickup = new Date(document.getElementById('pickup').value);
+                const returnDate = new Date(document.getElementById('return').value);
+                if (returnDate <= pickup) {
+                    e.preventDefault();
+                    alert('Return date must be after pickup date');
+                    return false;
+                }
+                const payment = document.querySelector('input[name="paymentMethod"]:checked');
+                if (!payment) {
+                    e.preventDefault();
+                    alert('Please select a payment method');
+                    return false;
+                }
+            });
+
 
             // Form validation
             const form = document.querySelector('.booking-form');

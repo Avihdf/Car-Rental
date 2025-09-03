@@ -12,4 +12,6 @@ router.post('/review/:id',home.userreview)
 
 router.get('/pagenotfound',home.showpagenotfound)
 
+router.get('/payment',home.showpaymentpage)
+
 module.exports = router;

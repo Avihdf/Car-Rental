@@ -92,3 +92,7 @@ exports.userreview = async (req, res) => {
 exports.showpagenotfound=async(req,res)=>{
     return res.render('pagenotfound')
 }
+
+exports.showpaymentpage=(req,res)=>{
+    return res .render('payment')
+}
